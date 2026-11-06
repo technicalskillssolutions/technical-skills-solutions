@@ -71,16 +71,6 @@ function updateClock() {
     }
 }
 
-let pendingInstallPrompt = null;
-window.addEventListener('beforeinstallprompt', event => {
-    event.preventDefault();
-    pendingInstallPrompt = event;
-    announce('This website can be installed as an app. Open the Android guide to install it.');
-});
-window.addEventListener('appinstalled', () => {
-    pendingInstallPrompt = null;
-    announce('Technical Skills Solutions was installed.');
-});
 function insertAccessibleButtonBreaks() {
     document.querySelectorAll('.button-row').forEach((row) => {
         const buttons = [...row.children].filter((node) => node instanceof HTMLButtonElement);
@@ -137,25 +127,11 @@ function initializeShell() {
         announce('Navigation menu closed.');
     } });
     const installButton = $('android-install-app');
-    installButton?.addEventListener('click', async () => {
+    installButton?.addEventListener('click', () => {
         const note = $('android-install-note');
-        if (!pendingInstallPrompt) {
-            if (note)
-                note.textContent = 'Open Chrome menu (three dots), then choose Install app or Add to Home screen. If the option is absent, confirm that this site is opened over HTTPS.';
-            announce('Use the Chrome menu to install this website as an app.');
-            return;
-        }
-        try {
-            await pendingInstallPrompt.prompt();
-            const choice = await pendingInstallPrompt.userChoice;
-            announce(choice.outcome === 'accepted' ? 'Installation accepted.' : 'Installation was dismissed.');
-            if (note)
-                note.textContent = choice.outcome === 'accepted' ? 'Installation accepted. Check your home screen or app launcher.' : 'Installation was not completed. You can try again from the browser menu.';
-        }
-        catch {
-            announce('The installation prompt could not be opened. Use the Chrome menu instead.');
-        }
-        pendingInstallPrompt = null;
+        if (note)
+            note.textContent = 'Open the Chrome menu (three dots), then choose Install app or Add to Home screen. If the option is absent, confirm that this site is opened over HTTPS.';
+        announce('Use the Chrome menu to install this website as an app.');
     });
     if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost')) {
         const swUrl = new URL(`${base}sw.js`, location.href);
