@@ -1,0 +1,18 @@
+{
+  "id": "/",
+  "name": "Technical Skills Solutions",
+  "short_name": "TSS Tools",
+  "description": "Accessible technology tools, software and practical technical guides.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#0a0f1f",
+  "theme_color": "#081426",
+  "lang": "en-IN",
+  "categories": ["utilities", "education", "productivity"],
+  "icons": [
+    { "src": "/icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
+    { "src": "/icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ]
+}

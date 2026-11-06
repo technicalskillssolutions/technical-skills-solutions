@@ -1,0 +1,36 @@
+
+    <a class="skip-link" href="#main-content">Skip to main content</a>
+<div class="home-greeting" role="group" aria-label="Welcome"><p id="welcome-greeting">Good afternoon!</p><time class="clock" id="welcome-clock" aria-label="Current time">--:--:--</time></div>
+    <div class="access access-toolbar" role="group" aria-label="Accessibility Controls">
+      <div class="toolbar-inner access-inner">
+        <span class="toolbar-label">Accessibility</span>
+        <button type="button" class="toolbar-button access-button" id="font-down" aria-label="Decrease font size">Decrease font</button>
+        <button type="button" class="toolbar-button access-button" id="font-reset" aria-label="Reset font size">Reset font</button>
+        <button type="button" class="toolbar-button access-button" id="font-up" aria-label="Increase font size">Increase font</button>
+        <span class="font-size-readout" id="font-size-value" aria-live="polite">Text size: 16 px</span>
+        <button type="button" class="toolbar-button access-button" id="theme-toggle" aria-pressed="false">Dark/Light Mode</button>
+        <button type="button" class="toolbar-button access-button" id="contrast-toggle" aria-pressed="false">High Contrast</button>
+        
+      </div>
+    </div>
+    <header class="site-header main-header">
+      <div class="header-inner">
+        <a class="brand logo" href="/" aria-label="Technical Skills Solutions home">
+          <img src="/images/logo.svg" width="54" height="54" alt="" />
+          <span><strong>Technical Skills Solutions</strong><small>Technology Without Barriers</small></span>
+        </a>
+        <button type="button" class="menu-toggle menu-btn" id="menu-toggle" aria-expanded="false" aria-controls="main-nav"><span aria-hidden="true">☰</span><span id="menu-toggle-label">Open navigation menu</span></button>
+        <nav id="main-nav" class="main-nav mobile-nav" aria-label="Primary navigation"><a href="/" accesskey="h"  >Home</a><a href="/about/" accesskey="a"  >About</a><a href="/tools/" accesskey="t"  >Tools</a><a href="/software/" accesskey="s"  >Software</a><a href="/shop/" accesskey="o"  >Shop</a><a href="/blogs/" accesskey="b"  >Blogs</a><a href="/privacy/" accesskey="p"  >Privacy</a><a href="/terms/" accesskey="m"  >Terms</a><a href="/contact/" accesskey="c"  >Contact</a></nav>
+      </div>
+    </header>
+    <main id="main-content" tabindex="-1"><section class="hero page-hero"><div class="hero-content page-hero-content"><p class="eyebrow">COMMUNICATION TOOL</p><h1>Direct Chat Link Generator</h1><p>Create links for platforms that support public chat, profile, phone or email destinations. Prefilled messages are used only where the platform supports them.</p></div></section>
+  <section class="container section-block"><article class="content-card tool-workspace"><h2>Generate a professional chat link</h2><div class="field"><label for="chat-platform">Select platform</label><select id="chat-platform"><option value="whatsapp">WhatsApp Direct Chat</option><option value="whatsapp-business">WhatsApp Business</option><option value="telegram">Telegram Direct Chat / Channel</option><option value="messenger">Facebook Messenger</option><option value="instagram">Instagram Profile (not a direct message)</option><option value="viber">Viber Chat</option><option value="signal">Signal</option><option value="email">Direct Email (mailto)</option><option value="phone">Phone Number</option></select></div><div class="field"><label for="chat-recipient" id="chat-recipient-label">Phone number with country code</label><input id="chat-recipient" type="text" placeholder="919876543210" autocomplete="off"><small id="chat-hint">Enter country code and number. Do not include spaces or a plus sign.</small></div><div class="field"><label for="chat-message">Pre-filled message (optional)</label><textarea id="chat-message" rows="4" placeholder="Write a message that will be filled in when the link opens."></textarea></div><div class="button-row"><button type="button" id="chat-generate" class="button-primary">Generate chat link</button><button type="button" id="chat-clear" class="button-secondary">Reset chat form</button></div><section id="chat-result" class="result-panel" hidden><h3>Generated link</h3><div class="field"><label for="chat-output">Shareable link</label><div class="copy-field"><input id="chat-output" readonly><button type="button" id="chat-copy" class="button-secondary">Copy generated chat link</button></div></div><div class="qr-result"><div><h4>QR code</h4><canvas id="chat-qr" width="220" height="220" aria-label="QR code for the generated chat link"></canvas><p id="chat-qr-status" role="status" aria-live="polite"></p><button type="button" id="chat-qr-download" class="button-secondary">Download chat QR code PNG</button></div><p>Scan this QR code to open the generated link. Check the destination before sharing it publicly.</p></div><a id="chat-open" class="text-link" href="#" target="_blank" rel="noopener noreferrer">Open generated link in a new tab</a></section></article></section></main>
+    <footer class="site-footer">
+      <div class="footer-container footer-grid">
+        <section class="footer-column footer-col"><h2>Technical Skills Solutions</h2><p>Accessible technology resources, practical browser tools and technical explainers designed to support digital independence for blind, low-vision and sighted users.</p><p class="credential"><strong>MSME Udyam Registration:</strong> UDYAM-RJ-30-0147268<br><strong>NIC:</strong> 85499 — Educational Services &amp; Technical Training</p></section>
+        <section class="footer-column footer-col"><h2>Community</h2><ul class="footer-links"><li><a href="https://www.youtube.com/@Technical-Solutions-For-Blind" target="_blank" rel="noopener noreferrer">Official YouTube channel</a></li><li><a href="https://t.me/technical_solutions_for_blind" target="_blank" rel="noopener noreferrer">Telegram channel</a></li><li><a href="https://chat.whatsapp.com/G9IUpSpxPkm8JDvdnUPtEy" target="_blank" rel="noopener noreferrer">WhatsApp community</a></li><li><a href="https://t.me/ayush546447" target="_blank" rel="noopener noreferrer">Non-copyright music Telegram</a></li></ul></section>
+        <section class="footer-column footer-col"><h2>Downloads, Explore &amp; Contact</h2><ul class="footer-links"><li><a href="/tools/">Online tools</a></li><li><a href="/shop/">Shop products</a></li><li><a href="/software/">Our software</a></li><li><a href="/android/">Android &amp; TalkBack guide</a></li><li><a href="/blogs/">Blogs</a></li><li><a href="mailto:technicalskillssolutions@gmail.com">technicalskillssolutions@gmail.com</a></li><li><a href="tel:+917410817798">+91 74108 17798</a></li></ul></section>
+      </div>
+      <div class="copyright-section footer-bottom"><div><a href="/privacy/">Privacy Policy</a><span aria-hidden="true"> · </span><a href="/terms/">Terms of Service</a></div><p>© 2026 Technical Skills Solutions. All rights reserved.</p></div>
+    </footer>
+    <div id="live-region" class="sr-only" role="status" aria-live="polite" aria-atomic="true"></div>

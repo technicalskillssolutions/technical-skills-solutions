@@ -1,0 +1,90 @@
+
+    <a class="skip-link" href="#main-content">Skip to main content</a>
+<div class="home-greeting" role="group" aria-label="Welcome"><p id="welcome-greeting">Good afternoon!</p><time class="clock" id="welcome-clock" aria-label="Current time">--:--:--</time></div>
+    <div class="access access-toolbar" role="group" aria-label="Accessibility Controls">
+      <div class="toolbar-inner access-inner">
+        <span class="toolbar-label">Accessibility</span>
+        <button type="button" class="toolbar-button access-button" id="font-down" aria-label="Decrease font size">Decrease font</button>
+        <button type="button" class="toolbar-button access-button" id="font-reset" aria-label="Reset font size">Reset font</button>
+        <button type="button" class="toolbar-button access-button" id="font-up" aria-label="Increase font size">Increase font</button>
+        <span class="font-size-readout" id="font-size-value" aria-live="polite">Text size: 16 px</span>
+        <button type="button" class="toolbar-button access-button" id="theme-toggle" aria-pressed="false">Dark/Light Mode</button>
+        <button type="button" class="toolbar-button access-button" id="contrast-toggle" aria-pressed="false">High Contrast</button>
+        
+      </div>
+    </div>
+    <header class="site-header main-header">
+      <div class="header-inner">
+        <a class="brand logo" href="/" aria-label="Technical Skills Solutions home">
+          <img src="/images/logo.svg" width="54" height="54" alt="" />
+          <span><strong>Technical Skills Solutions</strong><small>Technology Without Barriers</small></span>
+        </a>
+        <button type="button" class="menu-toggle menu-btn" id="menu-toggle" aria-expanded="false" aria-controls="main-nav"><span aria-hidden="true">☰</span><span id="menu-toggle-label">Open navigation menu</span></button>
+        <nav id="main-nav" class="main-nav mobile-nav" aria-label="Primary navigation"><a href="/" accesskey="h"  >Home</a><a href="/about/" accesskey="a"  >About</a><a href="/tools/" accesskey="t"  >Tools</a><a href="/software/" accesskey="s"  >Software</a><a href="/shop/" accesskey="o"  >Shop</a><a href="/blogs/" accesskey="b"  >Blogs</a><a href="/privacy/" accesskey="p"  >Privacy</a><a href="/terms/" accesskey="m"  >Terms</a><a href="/contact/" accesskey="c"  >Contact</a></nav>
+      </div>
+    </header>
+    <main id="main-content" tabindex="-1"><section class="hero page-hero"><div class="hero-content page-hero-content"><p class="eyebrow">EMAIL SIGNATURE STUDIO</p><h1>Gmail Email Signature Maker</h1><p>Create a handwritten-style signature image and a professional email footer that you can add to Gmail.</p></div></section>
+  <section class="container section-block">
+    <article class="content-card tool-workspace">
+      <h2>1. Create your signature image</h2>
+      <p>This creates a visual signature image for the footer of your emails. It is processed locally in your browser. For a personal handwritten signature, upload a clear photo or scan of your signature; the typed option is an accessible alternative.</p>
+      <div class="field"><label for="sig-source">Signature creation method</label><select id="sig-source"><option value="typed">Type my name in a signature style (keyboard accessible)</option><option value="upload">Upload my handwritten signature image</option><option value="draw">Draw with mouse, pen or touchscreen</option></select></div>
+      <div id="sig-typed-controls">
+        <div class="field"><label for="sig-name">Name to display in the signature</label><input id="sig-name" autocomplete="name" maxlength="80" placeholder="Your full name" /></div>
+        <div class="form-grid"><div class="field"><label for="sig-font">Signature font style</label><select id="sig-font"><option value="cursive">Handwritten / cursive</option><option value="serif">Classic serif</option><option value="sans-serif">Clean sans serif</option></select></div><div class="field"><label for="sig-colour">Ink colour</label><select id="sig-colour"><option value="#172b4d">Navy blue</option><option value="#000000">Black</option><option value="#075fc5">Blue</option><option value="#176b3a">Green</option></select></div></div>
+        <div class="field"><label for="sig-size">Signature text size: <output id="sig-size-value">48</output> px</label><input id="sig-size" type="range" min="26" max="64" value="48" /></div>
+        <label class="check-line"><input id="sig-underline" type="checkbox" /> Add a signature underline</label>
+      </div>
+      <div id="sig-upload-controls" hidden>
+        <div class="field"><label for="sig-upload">Choose a photo or scan of your handwritten signature</label><input id="sig-upload" type="file" accept="image/png,image/jpeg,image/webp" /></div>
+        <label class="check-line"><input id="sig-remove-white" type="checkbox" checked /> Make near-white paper background transparent</label>
+        <p class="fine-print">Use a close, well-lit image with dark ink on plain white paper. White-background removal is approximate; inspect the exported image before using it.</p>
+      </div>
+      <div id="sig-draw-controls" hidden>
+        <p>Use a mouse, stylus or touchscreen to draw. This canvas is pointer-based; screen-reader users can use the typed-name or uploaded-image method instead.</p>
+        <canvas id="sig-draw-canvas" width="700" height="180" aria-label="Optional signature drawing area. Draw using a pointer, stylus or touchscreen."></canvas>
+        <div class="button-row"><button type="button" id="sig-draw-clear" class="button-secondary">Clear signature drawing</button></div>
+      </div>
+      <div class="field"><label for="sig-background">Image background</label><select id="sig-background"><option value="transparent">Transparent background (recommended)</option><option value="white">White background</option></select></div>
+      <div class="signature-preview-wrap"><h3>Signature image preview</h3><canvas id="sig-preview-canvas" width="400" height="100" aria-hidden="true"></canvas><p id="sig-preview-description" class="fine-print" role="status" aria-live="polite">No signature has been generated yet.</p></div>
+      <div class="button-row"><button type="button" id="sig-preview-update" class="button-secondary">Update signature image preview</button><button type="button" id="sig-download-png" class="button-primary">Download Gmail signature image</button></div>
+      <p class="notice">Gmail’s recommended signature image size is about 300–400 px wide and 70–100 px high. This tool exports a 400 × 100 px PNG. The image is an email footer graphic, not proof of identity or a certificate-based digital signature.</p>
+    </article>
+    <article class="content-card tool-workspace">
+      <h2>2. Add your contact details</h2>
+      <p>These details remain selectable text when you paste them into Gmail. Keeping contact information as text makes the email footer more accessible than placing every detail inside one image.</p>
+      <div class="form-grid">
+        <div class="field"><label for="email-sig-name">Full name</label><input id="email-sig-name" autocomplete="name" maxlength="100" placeholder="Your name" /></div>
+        <div class="field"><label for="email-sig-role">Job title / role</label><input id="email-sig-role" maxlength="100" placeholder="Founder / Developer" /></div>
+        <div class="field"><label for="email-sig-org">Organization</label><input id="email-sig-org" maxlength="120" value="Technical Skills Solutions" /></div>
+        <div class="field"><label for="email-sig-address">Email address</label><input id="email-sig-address" type="email" autocomplete="email" maxlength="160" placeholder="name@example.com" /></div>
+        <div class="field"><label for="email-sig-phone">Phone (optional)</label><input id="email-sig-phone" type="tel" autocomplete="tel" maxlength="40" placeholder="+91 ..." /></div>
+        <div class="field"><label for="email-sig-website">Website (optional)</label><input id="email-sig-website" type="url" placeholder="https://example.com" /></div>
+      </div>
+      <div class="signature-preview" id="email-sig-details-preview" aria-live="polite">Your email contact details will appear here.</div>
+      <div class="button-row"><button type="button" id="email-sig-copy-text" class="button-secondary">Copy contact details for Gmail</button></div>
+      <p id="email-sig-status" class="status-box" role="status" aria-live="polite">Fill in the details you want to show at the end of your emails.</p>
+    </article>
+    <article class="content-card tool-workspace">
+      <h2>3. Add the image to Gmail</h2>
+      <ol>
+        <li>Download the PNG signature image above.</li>
+        <li>On a computer, open Gmail and choose Settings, then See all settings.</li>
+        <li>Under General, find Signature and create a new signature.</li>
+        <li>Enter or paste your contact details. Put the cursor where the signature image should appear.</li>
+        <li>Choose Insert image, select Upload, and select the downloaded PNG file.</li>
+        <li>Choose the displayed image size, set defaults for new emails and replies if required, then Save Changes.</li>
+      </ol>
+      <p class="fine-print">Gmail Help: <a href="https://support.google.com/mail/answer/8395?hl=en" target="_blank" rel="noopener noreferrer">Create a Gmail signature on a computer</a>. Google recommends approximately 70–100 px high by 300–400 px wide; image maximum is 100 px high by 1,000 px wide.</p>
+      <p class="notice"><strong>Android note:</strong> Gmail’s Android app has a separate Mobile signature setting that accepts text. If you do not create a separate mobile signature, Gmail says new messages use the signature created on your computer. See <a href="https://support.google.com/mail/answer/8395?co=GENIE.Platform%3DAndroid&hl=en" target="_blank" rel="noopener noreferrer">Gmail signature on Android</a>.</p>
+    </article>
+  </section></main>
+    <footer class="site-footer">
+      <div class="footer-container footer-grid">
+        <section class="footer-column footer-col"><h2>Technical Skills Solutions</h2><p>Accessible technology resources, practical browser tools and technical explainers designed to support digital independence for blind, low-vision and sighted users.</p><p class="credential"><strong>MSME Udyam Registration:</strong> UDYAM-RJ-30-0147268<br><strong>NIC:</strong> 85499 — Educational Services &amp; Technical Training</p></section>
+        <section class="footer-column footer-col"><h2>Community</h2><ul class="footer-links"><li><a href="https://www.youtube.com/@Technical-Solutions-For-Blind" target="_blank" rel="noopener noreferrer">Official YouTube channel</a></li><li><a href="https://t.me/technical_solutions_for_blind" target="_blank" rel="noopener noreferrer">Telegram channel</a></li><li><a href="https://chat.whatsapp.com/G9IUpSpxPkm8JDvdnUPtEy" target="_blank" rel="noopener noreferrer">WhatsApp community</a></li><li><a href="https://t.me/ayush546447" target="_blank" rel="noopener noreferrer">Non-copyright music Telegram</a></li></ul></section>
+        <section class="footer-column footer-col"><h2>Downloads, Explore &amp; Contact</h2><ul class="footer-links"><li><a href="/tools/">Online tools</a></li><li><a href="/shop/">Shop products</a></li><li><a href="/software/">Our software</a></li><li><a href="/android/">Android &amp; TalkBack guide</a></li><li><a href="/blogs/">Blogs</a></li><li><a href="mailto:technicalskillssolutions@gmail.com">technicalskillssolutions@gmail.com</a></li><li><a href="tel:+917410817798">+91 74108 17798</a></li></ul></section>
+      </div>
+      <div class="copyright-section footer-bottom"><div><a href="/privacy/">Privacy Policy</a><span aria-hidden="true"> · </span><a href="/terms/">Terms of Service</a></div><p>© 2026 Technical Skills Solutions. All rights reserved.</p></div>
+    </footer>
+    <div id="live-region" class="sr-only" role="status" aria-live="polite" aria-atomic="true"></div>

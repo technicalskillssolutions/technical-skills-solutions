@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://technicalskillssolutions.in/sitemap.xml

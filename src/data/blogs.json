@@ -1,0 +1,508 @@
+[
+  {
+    "slug": "webmcp-ai-agents-websites",
+    "title": "WebMCP: The Web Is Preparing for AI Agents, Not Just Human Clicks",
+    "dek": "A proposed browser standard could give AI agents a structured way to use website features. That is useful—but it makes clear permissions, accessible forms and human confirmation more important than ever.",
+    "category": "AI & The Web",
+    "published": "18 May 2026",
+    "updated": "7 October 2026",
+    "readTime": "7 min read",
+    "featured": true,
+    "sections": [
+      {
+        "paragraphs": [
+          "For most of the web’s history, a website has been designed around a person looking at a page, moving a pointer, and clicking buttons. AI agents are changing that assumption. An agent may need to search a catalogue, fill in a form, compare options or complete a multi-step task on behalf of a user. Repeatedly guessing where to click is fragile: layouts change, labels are ambiguous, and a visually obvious control may have no useful programmatic name.",
+          "WebMCP is an early, proposed web standard intended to expose structured website capabilities to browser-based agents. Chrome for Developers describes a model in which sites can define tools and annotate form elements so an agent can understand what an action does instead of inferring everything from pixels."
+        ]
+      },
+      {
+        "heading": "What WebMCP is trying to solve",
+        "paragraphs": [
+          "Think of a travel site with a search form. A human sees fields for destination, dates and guests. An agent needs the same information, but it also needs to know which values are required, what the submit action will do, and what result comes back. A structured tool can describe an operation such as searching available trips and expose typed inputs and an output. This is more dependable than asking an agent to hunt for a button whose position may move after a redesign.",
+          "The proposal is described as progressive enhancement. A site can continue to work for ordinary visitors while providing an additional machine-readable interface for agents that understand the capability. It is not a replacement for HTML, forms, URLs, or accessibility semantics."
+        ]
+      },
+      {
+        "heading": "Why this is relevant to accessibility",
+        "paragraphs": [
+          "The strongest lesson is not that websites should be built for bots instead of people. It is that explicit structure helps both. A correctly associated label, a button with a clear name, validation linked to its field, and a status message describing the result give assistive technology meaningful information. Those same concepts make it easier for an agent to understand the page.",
+          "However, WebMCP does not automatically make an inaccessible website accessible. A page can expose an agent tool and still have poor keyboard order, missing labels, unlabeled icons or status changes that NVDA does not announce. Human accessibility testing remains necessary."
+        ]
+      },
+      {
+        "heading": "The security question: what is an agent allowed to do?",
+        "paragraphs": [
+          "A structured tool is also an action surface. A read-only search operation is different from sending a message, deleting a file, paying an invoice or publishing a post. Website owners should separate low-risk lookups from high-impact actions, validate every input on the server, apply normal authentication and authorization, and require explicit user confirmation before consequential actions.",
+          "Agents can also encounter prompt injection: untrusted page content may contain instructions intended to manipulate the agent. A site must not treat arbitrary text on a page as trusted policy. The agent should receive narrowly scoped capabilities, and the user should be able to inspect what it is about to do."
+        ]
+      },
+      {
+        "heading": "A practical preparation checklist",
+        "bullets": [
+          "Use semantic HTML forms, buttons, headings and landmarks before considering agent-specific enhancements.",
+          "Give every field a persistent label and connect instructions and errors programmatically.",
+          "Separate read operations from actions that change data or spend money.",
+          "Validate permissions on the server; never rely on a hidden browser control as a security boundary.",
+          "Show the user the action, destination and important values before final confirmation.",
+          "Test the same journey with keyboard-only navigation, NVDA or another screen reader, and an agent-enabled browser."
+        ]
+      },
+      {
+        "heading": "Where things stand",
+        "paragraphs": [
+          "As of the Chrome for Developers documentation update on 7 October 2026, WebMCP is still presented as a proposed standard and an early capability—not a universal browser contract. Developers should treat it as an emerging interface to experiment with, not a reason to build a site that depends on it. The durable investment is still clean semantics, predictable behavior and clear user consent."
+        ]
+      }
+    ],
+    "sources": [
+      {
+        "label": "WebMCP documentation",
+        "url": "https://developer.chrome.google.cn/docs/ai/webmcp?hl=en",
+        "publisher": "Chrome for Developers",
+        "published": "18 May 2026; updated 7 October 2026"
+      },
+      {
+        "label": "Google I/O 2026: agentic web updates",
+        "url": "https://developer.chrome.com/blog/chrome-at-io26",
+        "publisher": "Chrome for Developers",
+        "published": "May 2026"
+      }
+    ]
+  },
+  {
+    "slug": "post-quantum-cryptography-migration-2026",
+    "title": "Post-Quantum Cryptography Has Entered the Migration Phase",
+    "dek": "The immediate task is not to panic about quantum computers. It is to inventory cryptography, understand long-lived data, and prepare systems to replace vulnerable public-key algorithms safely.",
+    "category": "Cybersecurity",
+    "published": "27 October 2026",
+    "updated": "4 November 2026",
+    "readTime": "8 min read",
+    "featured": true,
+    "sections": [
+      {
+        "paragraphs": [
+          "Quantum computing is often discussed in headlines as a distant technology that might one day break today’s encryption. The practical security conversation has moved beyond that headline. On 27 October 2026, the US National Institute of Standards and Technology (NIST) finalized NISTIR 8547, a report describing its approach to transitioning from quantum-vulnerable cryptographic algorithms to post-quantum standards.",
+          "The report matters because cryptography is embedded in far more than a browser lock icon. It protects software updates, device identity, secure connections, digital signatures, certificates, backups and long-term confidential records. Replacing these systems takes coordination across vendors and infrastructure, often over several years."
+        ]
+      },
+      {
+        "heading": "What “post-quantum” actually means",
+        "paragraphs": [
+          "Post-quantum cryptography (PQC) refers to cryptographic algorithms designed to resist attacks from both conventional computers and sufficiently capable future quantum computers. NIST standardized its first set of PQC algorithms in 2024. The best-known families include ML-KEM for establishing shared secrets, and ML-DSA and SLH-DSA for digital signatures.",
+          "These standards do not mean that a practical quantum computer can currently decrypt ordinary internet traffic. The concern is forward-looking: systems that must remain secure for many years may need to transition before an attacker has the capability to exploit older algorithms."
+        ]
+      },
+      {
+        "heading": "Why organizations are acting now",
+        "paragraphs": [
+          "One risk is often called “harvest now, decrypt later.” An attacker may collect encrypted data today and keep it in the hope that a future capability can decrypt it. That makes the expected lifetime of information important. A document that remains sensitive for decades deserves a different migration priority from a short-lived public web session.",
+          "Another challenge is dependency discovery. A company may know that its public website uses TLS, but not know which internal appliances, old clients, embedded devices, certificate authorities, firmware-signing systems or third-party services rely on algorithms that need to change. NIST’s transition report is intended to help organizations plan these steps rather than treating PQC as a one-line software update."
+        ]
+      },
+      {
+        "heading": "What a sensible migration plan looks like",
+        "bullets": [
+          "Create an inventory of cryptographic use: key exchange, signatures, certificates, VPNs, code signing, backups and embedded devices.",
+          "Identify data with a long confidentiality lifetime and prioritize the systems protecting it.",
+          "Ask software, cloud, hardware and identity vendors for their PQC support and migration road maps.",
+          "Design for cryptographic agility so algorithms and key sizes can be changed without rebuilding the entire product.",
+          "Test interoperability, performance, certificate sizes, hardware limits and recovery procedures before broad deployment.",
+          "Keep conventional security controls—patching, MFA, backups and least privilege—in place during the transition."
+        ]
+      },
+      {
+        "heading": "What individual users should do",
+        "paragraphs": [
+          "Most individuals do not need to install a “quantum-proof” app or manually change encryption settings today. Keep operating systems, browsers, phones and routers updated; use supported services; and choose vendors that publish credible security road maps. Be skeptical of products that claim to make every file instantly quantum-proof without explaining the algorithms, interoperability and key-management model.",
+          "For developers, the main lesson is to avoid hard-coding cryptographic choices into a product in ways that make future change impossible. A migration plan is an engineering discipline, not a marketing badge."
+        ]
+      },
+      {
+        "heading": "The takeaway",
+        "paragraphs": [
+          "NISTIR 8547 marks a shift from choosing new algorithms to coordinating a real-world transition. Quantum-resistant cryptography is not a reason for panic, but long-lived information and slow-moving infrastructure make early planning prudent. The organizations that begin discovery and vendor conversations now will have more options than those that wait for a deadline or a crisis."
+        ]
+      }
+    ],
+    "sources": [
+      {
+        "label": "NISTIR 8547: Transition to Post-Quantum Cryptography Standards",
+        "url": "https://csrc.nist.gov/pubs/ir/8547/final",
+        "publisher": "NIST Computer Security Resource Center",
+        "published": "27 October 2026"
+      },
+      {
+        "label": "NIST report announcement",
+        "url": "https://www.nist.gov/news-events/news/2026/10/nist-report-provides-guidelines-transition-post-quantum-cryptography",
+        "publisher": "National Institute of Standards and Technology",
+        "published": "October 2026"
+      }
+    ]
+  },
+  {
+    "slug": "passkeys-default-authentication-2026",
+    "title": "Passkeys Are Moving from Optional Security Feature to the Default Login",
+    "dek": "Government guidance and Microsoft Entra’s 2026 rollout show how passkeys are becoming mainstream. Here is how the technology works, what it prevents, and what users should still prepare for.",
+    "category": "Security & Identity",
+    "published": "3 November 2026",
+    "updated": "4 November 2026",
+    "readTime": "7 min read",
+    "featured": true,
+    "sections": [
+      {
+        "paragraphs": [
+          "Passwords remain one of the easiest ways for attackers to get into an account. People reuse them, choose predictable phrases, type them into lookalike websites, or lose them through data breaches. Multi-factor authentication improves security, but one-time codes and push approvals can still be targeted by phishing and social engineering.",
+          "Passkeys use public-key cryptography instead of asking the user to remember a shared secret. The device or password manager keeps a private key, while the service stores the matching public key. During sign-in, the service sends a challenge and the authenticator proves possession of the private key. The private key is not sent to the website."
+        ]
+      },
+      {
+        "heading": "Why passkeys resist phishing",
+        "paragraphs": [
+          "A passkey is associated with the legitimate website or app identity for which it was created. A fake domain cannot normally use a passkey registered for the real domain. This makes passkeys substantially more resistant to credential-harvesting pages than passwords entered by a person.",
+          "The UK National Cyber Security Centre reiterated its support for passkeys in its 2026 annual review, published on 3 November 2026. It describes them as a safer and simpler alternative to passwords and notes the UK government’s introduction of passkeys into its One Login identity service. This is a signal that passkeys are moving into real public-service workflows, not remaining a developer demonstration."
+        ]
+      },
+      {
+        "heading": "What changed in Microsoft Entra ID",
+        "paragraphs": [
+          "Microsoft announced that passkeys would become the default phishing-resistant authentication method in Entra ID, with the rollout beginning on 1 September 2026 for users enabled for SMS or voice authentication. The intention is to encourage users toward a stronger method during multi-factor sign-in. This is an administrative rollout for organizations, not a statement that every Microsoft account everywhere has already stopped supporting passwords.",
+          "For IT administrators, passkey adoption still requires user communication, supported authenticators, recovery planning and a pilot. Microsoft’s published rollout guidance also highlights preparation tasks for organizations that continue to rely on SMS or voice methods."
+        ]
+      },
+      {
+        "heading": "What users should check before switching",
+        "bullets": [
+          "Confirm that the service is the real website or app before creating a passkey.",
+          "Understand where passkeys are stored: device security, a platform account, or a password manager.",
+          "Set up a recovery path, such as a second trusted device or a hardware security key, where the service supports it.",
+          "Keep the phone, computer, browser and password manager updated.",
+          "Do not approve an unexpected sign-in prompt just because it appears on a familiar device.",
+          "Use a password manager for the services that have not yet added passkey support."
+        ]
+      },
+      {
+        "heading": "Accessibility matters too",
+        "paragraphs": [
+          "Passkeys can make sign-in easier, but the experience must work with screen readers, switch access, braille displays and people who cannot use biometric sensors. A well-designed flow offers accessible alternatives such as a device PIN or a security key, gives clear error messages, and does not make the user guess which device is waiting for approval.",
+          "The change is not simply “passwords are dead.” Services need reliable recovery and users need a clear understanding of their own account ecosystem. Passkeys reduce several important risks, but they do not eliminate malware, compromised devices, account-recovery fraud or social engineering."
+        ]
+      },
+      {
+        "heading": "The takeaway",
+        "paragraphs": [
+          "The direction of travel is clear: passkeys are becoming a default option in more services and institutions. Users should start adopting them where available, but pair that adoption with device updates and a recovery plan. Administrators should treat passkeys as an identity-modernization project, not just a toggle in a settings panel."
+        ]
+      }
+    ],
+    "sources": [
+      {
+        "label": "Passkeys: moving beyond passwords — NCSC Annual Review 2026",
+        "url": "https://www.ncsc.gov.uk/collection/annual-review-2026/building-strong-foundations/passkeys-beyond-passwords",
+        "publisher": "UK National Cyber Security Centre",
+        "published": "3 November 2026"
+      },
+      {
+        "label": "Passkeys are the default authentication method in Entra ID",
+        "url": "https://www.microsoft.com/en-us/security/blog/2026/07/13/microsoft-entra-id-security-updates-passkeys-are-the-default-authentication-method-in-entra-id/",
+        "publisher": "Microsoft Security Blog",
+        "published": "13 July 2026"
+      }
+    ]
+  },
+  {
+    "slug": "tencent-hy4-defensive-ai-cybersecurity",
+    "title": "Tencent’s Hy4 Shows the New Debate Around Defensive Cybersecurity AI",
+    "dek": "Tencent says its new model is trained to help find and fix software flaws while limiting offensive cyber content. The release highlights both the value and the verification challenges of specialized security models.",
+    "category": "AI Security",
+    "published": "4 November 2026",
+    "updated": "4 November 2026",
+    "readTime": "6 min read",
+    "featured": true,
+    "sections": [
+      {
+        "paragraphs": [
+          "Cybersecurity teams want AI that can help understand code, identify vulnerabilities and suggest fixes. At the same time, the same technical knowledge can be misused to build exploits or automate attacks. That dual-use problem is becoming central to how advanced AI models are trained, tested and released.",
+          "On 4 November 2026, Reuters reported that Tencent released Hy4, a new model that the company said was trained with cybersecurity data limited to defensive tasks. Tencent said it excluded material about creating hacking tools, breaking into systems and probing systems for weaknesses. The company described uses such as finding and fixing software flaws."
+        ]
+      },
+      {
+        "heading": "What is actually known about Hy4",
+        "paragraphs": [
+          "The most important distinction is between a company’s safety claims and an independent evaluation. Tencent said its own internal testing did not find an increased ability to conduct cyberattacks or bypass protections. That is a statement from the developer, not proof that every real-world misuse scenario has been ruled out.",
+          "The announcement comes amid wider concern about AI-assisted cyber operations. Models can help defenders triage large codebases and explain suspicious behavior, but they can also lower the effort required to understand unfamiliar systems. A model’s safety depends on more than the training dataset: tool permissions, deployment context, access controls, monitoring and the way an agent executes code all matter."
+        ]
+      },
+      {
+        "heading": "Why defensive AI can be useful",
+        "paragraphs": [
+          "A security engineer may use an assistant to explain a stack trace, summarize a patch, compare two versions of a dependency, or draft a remediation note. In a controlled environment, these tasks can reduce repetitive work and help teams communicate findings. AI can also make complex technical details easier to understand for junior analysts and developers.",
+          "However, a generated explanation is not a security verdict. A suggested patch can introduce a regression; a vulnerability ranking can be wrong; and a model may miss environmental context. Human review, reproducible testing and normal secure-development processes remain essential."
+        ]
+      },
+      {
+        "heading": "Questions to ask before trusting a security model",
+        "bullets": [
+          "Who evaluated the model, and are the test methods and results public?",
+          "Does the model have access to a terminal, repository, browser or production system?",
+          "Can it execute changes, or can it only suggest them for human review?",
+          "How are prompts, source code and findings stored and retained?",
+          "Can the organization audit tool calls and reproduce important conclusions?",
+          "What happens when the model is uncertain or receives malicious instructions embedded in code or documents?"
+        ]
+      },
+      {
+        "heading": "A practical approach for smaller teams",
+        "paragraphs": [
+          "Teams without a dedicated security department can still benefit from bounded AI assistance. Use it to explain a vulnerability report or draft a checklist, but keep repository write access disabled by default. Test proposed patches in a disposable branch, run the project’s test suite, review dependency updates and have a human approve changes before release. Never paste passwords, signing keys, customer records or production secrets into an unapproved model.",
+          "The broader lesson from Hy4 is that “AI for cybersecurity” is not one category. Defensive analysis, vulnerability research and exploit development are different capability levels. Vendors should explain what their systems can do, what they deliberately restrict, and how claims are assessed."
+        ]
+      },
+      {
+        "heading": "The takeaway",
+        "paragraphs": [
+          "Hy4 is a notable release because it places defensive-use limits at the center of the announcement. Its real significance will depend on public technical documentation, independent testing and how the model behaves when connected to tools. For now, security teams should evaluate it as they would any other high-impact security product: test it, constrain it, log it and keep a human accountable for the final decision."
+        ]
+      }
+    ],
+    "sources": [
+      {
+        "label": "Tencent rolls out AI model trained with limited cybersecurity data amid hacking fears",
+        "url": "https://www.reuters.com/legal/litigation/tencent-rolls-out-ai-model-trained-with-limited-cybersecurity-data-amid-hacking-2026-11-04/",
+        "publisher": "Reuters",
+        "published": "4 November 2026"
+      },
+      {
+        "label": "Tencent Hy4 release announcement",
+        "url": "https://en.prnasia.com/releases/apac/tencent-launches-hy4-joining-the-ranks-of-the-world-s-leading-open-source-ai-models-554689.shtml",
+        "publisher": "PR Newswire Asia (company announcement)",
+        "published": "4 November 2026"
+      }
+    ]
+  },
+  {
+    "slug": "dot-pad-tactile-display-api-nvda-jaws",
+    "title": "Dot Pad’s Tactile Display API Brings More Than One Line of Braille into the Conversation",
+    "dek": "A 2026 update for Dot Pad users combines screen-reader support, multiline braille and tactile graphics—an important development for maths, diagrams and data exploration.",
+    "category": "Assistive Technology",
+    "published": "4 September 2026",
+    "updated": "20 October 2026",
+    "readTime": "6 min read",
+    "featured": true,
+    "sections": [
+      {
+        "paragraphs": [
+          "Refreshable braille displays have traditionally presented a line of text that a reader pans through. That is valuable, but some information is inherently spatial. A chart, a mathematical curve, a diagram or a table can lose its relationships when it is flattened into a sequence of words. Tactile graphics provide another way to explore that structure.",
+          "Dot announced its Tactile Display API for Dot Pad in September 2026. The company described enhanced support with NVDA and JAWS, allowing users to work with multiline braille, tactile graphics and structured information while staying within familiar Windows applications."
+        ]
+      },
+      {
+        "heading": "What the update adds",
+        "paragraphs": [
+          "Dot says users can choose six, eight or ten lines of braille, depending on their reading preference and task. The system can present more context at once, rather than requiring as much horizontal or line-by-line panning. The company also describes a hybrid braille and tactile-print mode intended to help users recognize unfamiliar characters.",
+          "Examples in the announcement include tactile graphs generated from equations in Microsoft Word or MathML on web pages, and tactile representations of trends in Excel charts. A display viewer can also help sighted teachers or colleagues see what is being explored on the tactile surface."
+        ]
+      },
+      {
+        "heading": "Why it matters for education and work",
+        "paragraphs": [
+          "Maths and science are full of relationships that are difficult to communicate through speech alone. A sine wave, a bar chart with a sudden spike, or a table with several columns is not just a collection of labels; the position and shape of the information matter. Tactile graphics can give a blind learner another way to inspect those relationships.",
+          "For professionals, the same capability could help with spreadsheets, technical documentation and structured reports. This does not mean every chart becomes instantly understandable. Tactile output still needs a well-designed representation, a clear legend, useful labels and time to explore."
+        ]
+      },
+      {
+        "heading": "Compatibility and practical caveats",
+        "paragraphs": [
+          "Dot’s announcement says the NVDA add-on is compatible with NVDA 2026.2 and later, while a separate component is provided for JAWS for Windows 2026 and later. Users should verify the exact supported Dot Pad model, screen-reader version, connection method and installation instructions before downloading anything.",
+          "A tactile display is additional hardware, not a free software-only replacement for a screen reader. Cost, availability, language support, content format and training all affect whether it is practical for a particular learner or workplace."
+        ]
+      },
+      {
+        "heading": "How developers can help",
+        "bullets": [
+          "Use semantic document structures and keep headings, tables and equations correctly represented.",
+          "Avoid turning charts into unlabeled pictures; provide data tables and textual summaries as alternatives.",
+          "Expose meaningful names, roles and values to screen readers.",
+          "Test complex content with blind users and, where possible, with tactile display hardware.",
+          "Treat tactile output as a complementary presentation, not the only way to access information."
+        ]
+      },
+      {
+        "heading": "The takeaway",
+        "paragraphs": [
+          "The Tactile Display API points toward a richer accessibility toolkit: speech, braille, touch and structured digital content working together. Its greatest value may be in content where spatial relationships matter. The next step is broader application support and real-world testing with students, educators and professionals."
+        ]
+      }
+    ],
+    "sources": [
+      {
+        "label": "Dot: Tactile Display API announcement",
+        "url": "https://blog.dotincorp.com/dot-transforms-screen-reader-tactile-access-with-new-display-api",
+        "publisher": "Dot Inc.",
+        "published": "4 September 2026"
+      },
+      {
+        "label": "NVDA 2026.2 release notes",
+        "url": "https://api.nvaccess.org/releases/2026.2/documentation/en/changes.html",
+        "publisher": "NV Access",
+        "published": "2026"
+      },
+      {
+        "label": "Dot Pad tactile display support overview",
+        "url": "https://www.accessibility.org.au/dot-launches-new-tactile-display-support-for-nvda-and-jaws/",
+        "publisher": "Centre for Accessibility Australia",
+        "published": "8 September 2026"
+      }
+    ]
+  },
+  {
+    "slug": "apple-intelligence-accessibility-voiceover-2026",
+    "title": "Apple Intelligence and Accessibility: What Image Descriptions Could Change for VoiceOver",
+    "dek": "Apple’s 2026 accessibility announcements point toward richer image descriptions and natural-language interaction. The opportunity is meaningful, but availability, accuracy and privacy still matter.",
+    "category": "Assistive Technology",
+    "published": "19 May 2026",
+    "updated": "4 November 2026",
+    "readTime": "7 min read",
+    "featured": false,
+    "sections": [
+      {
+        "paragraphs": [
+          "A screen reader can announce an image’s alternative text, but that only helps when the app or website provides a useful description. Many images still arrive with filenames, generic labels or no alternative text at all. Apple’s accessibility announcements on 19 May 2026 previewed a broader role for Apple Intelligence in describing images and helping users ask follow-up questions about what a camera can see.",
+          "Apple said Image Explorer in VoiceOver would use Apple Intelligence to provide more detailed descriptions of images across the system, including photographs, scanned bills, personal records and other visual content. It also described updates to Live Recognition that let users ask questions about the camera view and ask follow-up questions in natural language."
+        ]
+      },
+      {
+        "heading": "From “what is in this picture?” to a conversation",
+        "paragraphs": [
+          "The important shift is from a one-time label to an interactive explanation. A user might ask what objects appear in a photo, then ask where a particular item is, or ask for more detail about a document. For low-vision users, Apple also described an updated Magnifier experience with a high-contrast interface and spoken controls.",
+          "Apple also previewed natural-language improvements to Voice Control, allowing people to describe controls instead of memorizing exact labels or numbered overlays. This could help when an interface contains poorly labeled visual elements, although it does not remove the responsibility of app developers to build accessible controls."
+        ]
+      },
+      {
+        "heading": "What it could mean for everyday tasks",
+        "bullets": [
+          "A scanned utility bill may become easier to inspect when a user can ask for the amount due or the due date.",
+          "A photograph may be easier to explore when the user can ask a follow-up question about an object or scene.",
+          "A visual app layout may be easier to navigate through natural language if Voice Control can identify the intended control.",
+          "Accessibility Reader may offer a more focused reading experience for people who need adjustments to the way text is presented."
+        ]
+      },
+      {
+        "heading": "Do not confuse a description with verified data",
+        "paragraphs": [
+          "AI-generated descriptions can be wrong. A model may overlook a small detail, confuse two objects, misread a number or produce a confident-sounding guess. This is particularly important for bills, medication labels, financial documents and personal records. Users should verify critical numbers against the original source or ask a trusted person when the stakes are high.",
+          "Availability is also not universal. Apple’s support documentation notes that Apple Intelligence features require supported hardware and software, and availability can vary by language and region. A feature being announced does not guarantee that it is enabled on every iPhone, in every country, or in every language."
+        ]
+      },
+      {
+        "heading": "What web and app developers should learn",
+        "paragraphs": [
+          "Image understanding is a useful safety net, not a substitute for alt text. Developers should still provide meaningful accessible names, captions, descriptions and structured data. A model can help a user recover information from an inaccessible image, but it should not be the only path to an action or a critical instruction.",
+          "For people using NVDA on Windows, Apple’s announcement is not a Windows feature release. The broader trend is still relevant: multimodal AI is becoming part of mainstream assistive technology. Windows, Android and browser developers will face the same design questions around useful descriptions, uncertainty, privacy and user control."
+        ]
+      },
+      {
+        "heading": "The takeaway",
+        "paragraphs": [
+          "AI-assisted image description may make visual information more explorable, especially when traditional labels are missing. Its value depends on accurate output, language support, transparent limitations and easy ways to ask follow-up questions. Accessibility improves most when intelligent assistance is layered on top of good semantic design rather than used to excuse poor design."
+        ]
+      }
+    ],
+    "sources": [
+      {
+        "label": "Apple accessibility features powered by Apple Intelligence",
+        "url": "https://www.apple.com/newsroom/2026/05/apple-unveils-new-accessibility-features-with-apple-intelligence/",
+        "publisher": "Apple Newsroom",
+        "published": "19 May 2026"
+      },
+      {
+        "label": "Use VoiceOver to hear what is on screen and around you",
+        "url": "https://support.apple.com/en-in/guide/iphone/iph37e6b3844/27/ios/27",
+        "publisher": "Apple Support",
+        "published": "Current iOS 27 guide"
+      }
+    ]
+  },
+  {
+    "slug": "run-ai-models-in-browser-webgpu-2026",
+    "title": "AI Models in the Browser: WebGPU, WebAssembly and the Privacy Trade-Off",
+    "dek": "Modern JavaScript runtimes can execute machine-learning models locally. That can reduce server calls and keep files on a device, but model size, hardware support and memory use still decide what is practical.",
+    "category": "Web Development",
+    "published": "2026",
+    "updated": "4 November 2026",
+    "readTime": "8 min read",
+    "featured": false,
+    "sections": [
+      {
+        "paragraphs": [
+          "A few years ago, most demanding AI features required a remote server. Browser-based machine learning has expanded that design space. ONNX Runtime Web lets JavaScript applications run compatible ONNX models through WebAssembly and, where supported, WebGPU or WebNN. Hugging Face Transformers.js provides browser-oriented pipelines for language, vision and audio tasks and uses ONNX Runtime under the hood.",
+          "This does not mean every large language model can run smoothly on every phone. The runtime is only one part of the system. The model must be in a compatible format, fit within memory limits, have supported operators, and be small enough to download and execute without making the experience unusable."
+        ]
+      },
+      {
+        "heading": "WebAssembly and WebGPU have different jobs",
+        "paragraphs": [
+          "WebAssembly is a portable way to run compiled code inside a browser sandbox. For ONNX Runtime Web, its WASM execution provider is the broad compatibility option and supports the full operator set described in the project documentation. It can be a sensible fallback when a device does not expose a usable GPU API.",
+          "WebGPU is a browser API for general-purpose GPU computation as well as graphics. It can accelerate suitable machine-learning workloads by using the device GPU. ONNX Runtime’s WebGPU guide describes it as useful for more compute-intensive models, but also notes that GPU execution providers support a subset of operators compared with WASM. A model that works on one provider may therefore need a different configuration or fallback on another."
+        ]
+      },
+      {
+        "heading": "Privacy benefits are real—but conditional",
+        "paragraphs": [
+          "When inference happens entirely in the browser, the input can remain on the device. That is useful for a document summarizer, image classifier or OCR workflow that handles personal records. Local inference can also work offline after the model and assets have been downloaded.",
+          "But “runs in the browser” does not automatically mean “private.” The app may still send analytics, call an external API, fetch images from a third-party URL or store results in browser storage. A model download also reveals which model is being used to the hosting provider. Privacy claims must describe the whole network behavior, not just the inference function."
+        ]
+      },
+      {
+        "heading": "The hidden cost: downloads and memory",
+        "paragraphs": [
+          "A model may be tens or hundreds of megabytes—or larger. Users may need to download it again after cache eviction, and low-memory devices may struggle with large tensors or high-resolution images. A multi-page document should be processed in controlled batches, with one page or small group of pages in memory at a time. The UI should expose progress, allow cancellation, and explain whether data is uploaded.",
+          "For accessibility, model loading must not freeze the interface or leave a screen-reader user without feedback. Announce meaningful milestones such as model download started, page 12 of 200, processing paused and results ready. Avoid announcing every low-level progress tick."
+        ]
+      },
+      {
+        "heading": "A practical architecture",
+        "bullets": [
+          "Feature-detect WebGPU instead of assuming it exists.",
+          "Use WebGPU for compatible devices and a WASM fallback for broader coverage.",
+          "Choose a task-specific, compressed model rather than downloading a general model for every feature.",
+          "Cache model files carefully and give users a way to clear downloaded assets.",
+          "Process large inputs in batches and release canvases, tensors and object URLs when finished.",
+          "Disclose all external requests and keep sensitive content out of analytics and logs."
+        ]
+      },
+      {
+        "heading": "What this means for an accessible tool portal",
+        "paragraphs": [
+          "A browser-based OCR tool can keep selected files local while downloading language data from a model host. A local image classifier can describe a picture without uploading it. A speech model can transcribe audio in the tab. Those are meaningful capabilities, but they should be introduced as optional features with clear hardware and download expectations, not described as universally fast or guaranteed to work offline from the first visit.",
+          "For a project such as Technical Skills Solutions, a realistic roadmap is to retain a lightweight, reliable baseline first, then add WebGPU-backed experiments when the model is small enough and the device supports it. Measure the experience on everyday laptops and phones, not only on a developer workstation."
+        ]
+      },
+      {
+        "heading": "The takeaway",
+        "paragraphs": [
+          "The browser is becoming a credible AI runtime, not just a presentation layer. WebGPU can accelerate suitable models; WASM provides a useful compatibility path; and ONNX Runtime Web and Transformers.js reduce the amount of custom inference plumbing. Good product engineering still requires careful model selection, privacy disclosures, graceful fallback and accessible progress feedback."
+        ]
+      }
+    ],
+    "sources": [
+      {
+        "label": "ONNX Runtime Web application tutorial",
+        "url": "https://onnxruntime.ai/docs/tutorials/web/",
+        "publisher": "ONNX Runtime",
+        "published": "Documentation accessed 4 November 2026"
+      },
+      {
+        "label": "ONNX Runtime Web: WebGPU execution provider",
+        "url": "https://onnxruntime.ai/docs/tutorials/web/ep-webgpu.html",
+        "publisher": "ONNX Runtime",
+        "published": "Documentation accessed 4 November 2026"
+      },
+      {
+        "label": "Transformers.js: Running models on WebGPU",
+        "url": "https://huggingface.co/docs/transformers.js/guides/webgpu",
+        "publisher": "Hugging Face",
+        "published": "Documentation accessed 4 November 2026"
+      }
+    ]
+  }
+]

@@ -1,0 +1,45 @@
+
+    <a class="skip-link" href="#main-content">Skip to main content</a>
+<div class="home-greeting" role="group" aria-label="Welcome"><p id="welcome-greeting">Good afternoon!</p><time class="clock" id="welcome-clock" aria-label="Current time">--:--:--</time></div>
+    <div class="access access-toolbar" role="group" aria-label="Accessibility Controls">
+      <div class="toolbar-inner access-inner">
+        <span class="toolbar-label">Accessibility</span>
+        <button type="button" class="toolbar-button access-button" id="font-down" aria-label="Decrease font size">Decrease font</button>
+        <button type="button" class="toolbar-button access-button" id="font-reset" aria-label="Reset font size">Reset font</button>
+        <button type="button" class="toolbar-button access-button" id="font-up" aria-label="Increase font size">Increase font</button>
+        <span class="font-size-readout" id="font-size-value" aria-live="polite">Text size: 16 px</span>
+        <button type="button" class="toolbar-button access-button" id="theme-toggle" aria-pressed="false">Dark/Light Mode</button>
+        <button type="button" class="toolbar-button access-button" id="contrast-toggle" aria-pressed="false">High Contrast</button>
+        
+      </div>
+    </div>
+    <header class="site-header main-header">
+      <div class="header-inner">
+        <a class="brand logo" href="/" aria-label="Technical Skills Solutions home">
+          <img src="/images/logo.svg" width="54" height="54" alt="" />
+          <span><strong>Technical Skills Solutions</strong><small>Technology Without Barriers</small></span>
+        </a>
+        <button type="button" class="menu-toggle menu-btn" id="menu-toggle" aria-expanded="false" aria-controls="main-nav"><span aria-hidden="true">☰</span><span id="menu-toggle-label">Open navigation menu</span></button>
+        <nav id="main-nav" class="main-nav mobile-nav" aria-label="Primary navigation"><a href="/" accesskey="h"  >Home</a><a href="/about/" accesskey="a"  >About</a><a href="/tools/" accesskey="t"  >Tools</a><a href="/software/" accesskey="s"  >Software</a><a href="/shop/" accesskey="o"  >Shop</a><a href="/blogs/" accesskey="b"  >Blogs</a><a href="/privacy/" accesskey="p"  >Privacy</a><a href="/terms/" accesskey="m"  >Terms</a><a href="/contact/" accesskey="c"  >Contact</a></nav>
+      </div>
+    </header>
+    <main id="main-content" tabindex="-1"><section class="hero page-hero"><div class="hero-content page-hero-content"><p class="eyebrow">LINK SHARING TOOL</p><h1>URL Shortener & QR Code Generator</h1><p>Create a short URL and generate a QR code for sharing.</p></div></section>
+  <section class="container section-block"><article class="content-card tool-workspace">
+    <h2>Create a short link</h2>
+    <p class="notice"><strong>No account or API key required.</strong> When you select Shorten URL, the destination URL is sent to an external shortening service. QR codes are generated locally in your browser. Do not shorten private or confidential links.</p>
+    <div class="field"><label for="long-url">Original destination URL</label><input id="long-url" type="url" placeholder="https://example.com/a/long/page" autocomplete="url" required></div>
+    <div class="button-row"><button type="button" id="shorten-url" class="button-primary">Shorten URL</button><button type="button" id="copy-original-url" class="button-secondary">Copy destination URL</button><button type="button" id="make-original-qr" class="button-secondary">Create QR code for original URL</button><button type="button" id="shorten-clear" class="button-secondary">Clear URL and results</button></div>
+    <section id="original-qr-result" class="result-panel" hidden><h3>QR code for original URL</h3><canvas id="original-url-qr-canvas" width="220" height="220" aria-label="QR code for the original URL"></canvas><p id="original-qr-status" role="status" aria-live="polite"></p><div class="button-row"><button type="button" id="original-url-qr-download" class="button-secondary">Download original URL QR PNG</button></div></section>
+    
+    <section id="shortener-result" class="result-panel" hidden><h3>Your short URL is ready</h3><div class="field"><label for="short-url-output">Short URL</label><div class="copy-field"><input id="short-url-output" readonly><button type="button" id="short-url-copy" class="button-secondary">Copy shortened URL</button></div></div><div class="qr-result"><div><h4>QR code</h4><canvas id="short-url-qr" width="220" height="220" aria-label="QR code for the shortened URL"></canvas><p id="short-qr-status" role="status" aria-live="polite"></p><button type="button" id="short-url-qr-download" class="button-secondary">Download shortened URL QR code PNG</button></div><p>Review the destination before sharing. Anyone with the short link may be able to access its destination.</p></div><a id="short-url-open" class="text-link" target="_blank" rel="noopener noreferrer" href="#">Open shortened URL</a></section>
+    <p id="shortener-status" role="status" aria-live="polite" class="status-box">Ready. Enter a URL to get started.</p>
+  </article></section></main>
+    <footer class="site-footer">
+      <div class="footer-container footer-grid">
+        <section class="footer-column footer-col"><h2>Technical Skills Solutions</h2><p>Accessible technology resources, practical browser tools and technical explainers designed to support digital independence for blind, low-vision and sighted users.</p><p class="credential"><strong>MSME Udyam Registration:</strong> UDYAM-RJ-30-0147268<br><strong>NIC:</strong> 85499 — Educational Services &amp; Technical Training</p></section>
+        <section class="footer-column footer-col"><h2>Community</h2><ul class="footer-links"><li><a href="https://www.youtube.com/@Technical-Solutions-For-Blind" target="_blank" rel="noopener noreferrer">Official YouTube channel</a></li><li><a href="https://t.me/technical_solutions_for_blind" target="_blank" rel="noopener noreferrer">Telegram channel</a></li><li><a href="https://chat.whatsapp.com/G9IUpSpxPkm8JDvdnUPtEy" target="_blank" rel="noopener noreferrer">WhatsApp community</a></li><li><a href="https://t.me/ayush546447" target="_blank" rel="noopener noreferrer">Non-copyright music Telegram</a></li></ul></section>
+        <section class="footer-column footer-col"><h2>Downloads, Explore &amp; Contact</h2><ul class="footer-links"><li><a href="/tools/">Online tools</a></li><li><a href="/shop/">Shop products</a></li><li><a href="/software/">Our software</a></li><li><a href="/android/">Android &amp; TalkBack guide</a></li><li><a href="/blogs/">Blogs</a></li><li><a href="mailto:technicalskillssolutions@gmail.com">technicalskillssolutions@gmail.com</a></li><li><a href="tel:+917410817798">+91 74108 17798</a></li></ul></section>
+      </div>
+      <div class="copyright-section footer-bottom"><div><a href="/privacy/">Privacy Policy</a><span aria-hidden="true"> · </span><a href="/terms/">Terms of Service</a></div><p>© 2026 Technical Skills Solutions. All rights reserved.</p></div>
+    </footer>
+    <div id="live-region" class="sr-only" role="status" aria-live="polite" aria-atomic="true"></div>

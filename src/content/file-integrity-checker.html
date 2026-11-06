@@ -1,0 +1,48 @@
+
+    <a class="skip-link" href="#main-content">Skip to main content</a>
+<div class="home-greeting" role="group" aria-label="Welcome"><p id="welcome-greeting">Good afternoon!</p><time class="clock" id="welcome-clock" aria-label="Current time">--:--:--</time></div>
+    <div class="access access-toolbar" role="group" aria-label="Accessibility Controls">
+      <div class="toolbar-inner access-inner">
+        <span class="toolbar-label">Accessibility</span>
+        <button type="button" class="toolbar-button access-button" id="font-down" aria-label="Decrease font size">Decrease font</button>
+        <button type="button" class="toolbar-button access-button" id="font-reset" aria-label="Reset font size">Reset font</button>
+        <button type="button" class="toolbar-button access-button" id="font-up" aria-label="Increase font size">Increase font</button>
+        <span class="font-size-readout" id="font-size-value" aria-live="polite">Text size: 16 px</span>
+        <button type="button" class="toolbar-button access-button" id="theme-toggle" aria-pressed="false">Dark/Light Mode</button>
+        <button type="button" class="toolbar-button access-button" id="contrast-toggle" aria-pressed="false">High Contrast</button>
+        
+      </div>
+    </div>
+    <header class="site-header main-header">
+      <div class="header-inner">
+        <a class="brand logo" href="/" aria-label="Technical Skills Solutions home">
+          <img src="/images/logo.svg" width="54" height="54" alt="" />
+          <span><strong>Technical Skills Solutions</strong><small>Technology Without Barriers</small></span>
+        </a>
+        <button type="button" class="menu-toggle menu-btn" id="menu-toggle" aria-expanded="false" aria-controls="main-nav"><span aria-hidden="true">☰</span><span id="menu-toggle-label">Open navigation menu</span></button>
+        <nav id="main-nav" class="main-nav mobile-nav" aria-label="Primary navigation"><a href="/" accesskey="h"  >Home</a><a href="/about/" accesskey="a"  >About</a><a href="/tools/" accesskey="t"  aria-current="page">Tools</a><a href="/software/" accesskey="s"  >Software</a><a href="/shop/" accesskey="o"  >Shop</a><a href="/blogs/" accesskey="b"  >Blogs</a><a href="/privacy/" accesskey="p"  >Privacy</a><a href="/terms/" accesskey="m"  >Terms</a><a href="/contact/" accesskey="c"  >Contact</a></nav>
+      </div>
+    </header>
+    <main id="main-content" tabindex="-1">
+<section class="hero page-hero"><div class="hero-content page-hero-content"><p class="eyebrow">SECURITY & FILE UTILITIES</p><h1>File Integrity &amp; Hash Checker</h1><p>Calculate a cryptographic fingerprint for a file and compare it with a checksum supplied by a trusted source.</p></div></section>
+<section class="container section-block"><article class="content-card tool-workspace">
+<h2>Calculate file hash</h2><p>Select a file and choose a hashing algorithm. The browser calculates the hash locally; the file is not uploaded to Technical Skills Solutions or a third-party service.</p>
+<div class="field"><label for="hash-file">Choose a file</label><input id="hash-file" type="file" aria-describedby="hash-file-help"></div>
+<p id="hash-file-help" class="fine-print">For memory safety, this version supports files up to 100 MB. Hash calculation requires a modern browser over HTTPS.</p>
+<div class="field"><label for="hash-algorithm">Hash algorithm</label><select id="hash-algorithm"><option value="SHA-256">SHA-256 (recommended)</option><option value="SHA-384">SHA-384</option><option value="SHA-512">SHA-512</option></select></div>
+<div class="field"><label for="hash-expected">Expected checksum (optional)</label><input id="hash-expected" type="text" autocomplete="off" spellcheck="false" placeholder="Paste the checksum provided by the software publisher"></div>
+<p class="fine-print">If you provide an expected checksum, the tool compares it with the calculated hash. Only compare against a checksum obtained from a source you trust.</p>
+<div class="button-row"><button type="button" class="button-primary" id="hash-calculate">Calculate and verify hash</button><button type="button" class="button-secondary" id="hash-copy" disabled>Copy calculated hash</button></div>
+<div class="field"><label for="hash-result">Calculated file hash</label><input id="hash-result" type="text" readonly spellcheck="false" placeholder="The calculated hash will appear here"></div>
+<p id="hash-status" class="status-box" role="status" aria-live="polite" aria-atomic="true">Choose a file to begin. No file is uploaded.</p>
+<h2>What is a file hash?</h2><p>A hash is a fixed-length digital fingerprint calculated from file contents. If even a small part of a file changes, its hash will normally change too. Matching a trusted SHA-256 checksum helps verify that a downloaded file has not changed unexpectedly. A hash alone does not prove that a file is safe or free of malware.</p>
+</article></section></main>
+    <footer class="site-footer">
+      <div class="footer-container footer-grid">
+        <section class="footer-column footer-col"><h2>Technical Skills Solutions</h2><p>Accessible technology resources, practical browser tools and technical explainers designed to support digital independence for blind, low-vision and sighted users.</p><p class="credential"><strong>MSME Udyam Registration:</strong> UDYAM-RJ-30-0147268<br><strong>NIC:</strong> 85499 — Educational Services &amp; Technical Training</p></section>
+        <section class="footer-column footer-col"><h2>Community</h2><ul class="footer-links"><li><a href="https://www.youtube.com/@Technical-Solutions-For-Blind" target="_blank" rel="noopener noreferrer">Official YouTube channel</a></li><li><a href="https://t.me/technical_solutions_for_blind" target="_blank" rel="noopener noreferrer">Telegram channel</a></li><li><a href="https://chat.whatsapp.com/G9IUpSpxPkm8JDvdnUPtEy" target="_blank" rel="noopener noreferrer">WhatsApp community</a></li><li><a href="https://t.me/ayush546447" target="_blank" rel="noopener noreferrer">Non-copyright music Telegram</a></li></ul></section>
+        <section class="footer-column footer-col"><h2>Downloads, Explore &amp; Contact</h2><ul class="footer-links"><li><a href="/tools/">Online tools</a></li><li><a href="/shop/">Shop products</a></li><li><a href="/software/">Our software</a></li><li><a href="/android/">Android &amp; TalkBack guide</a></li><li><a href="/blogs/">Blogs</a></li><li><a href="mailto:technicalskillssolutions@gmail.com">technicalskillssolutions@gmail.com</a></li><li><a href="tel:+917410817798">+91 74108 17798</a></li></ul></section>
+      </div>
+      <div class="copyright-section footer-bottom"><div><a href="/privacy/">Privacy Policy</a><span aria-hidden="true"> · </span><a href="/terms/">Terms of Service</a></div><p>© 2026 Technical Skills Solutions. All rights reserved.</p></div>
+    </footer>
+    <div id="live-region" class="sr-only" role="status" aria-live="polite" aria-atomic="true"></div>

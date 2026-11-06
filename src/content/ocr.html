@@ -1,0 +1,51 @@
+
+    <a class="skip-link" href="#main-content">Skip to main content</a>
+<div class="home-greeting" role="group" aria-label="Welcome"><p id="welcome-greeting">Good afternoon!</p><time class="clock" id="welcome-clock" aria-label="Current time">--:--:--</time></div>
+    <div class="access access-toolbar" role="group" aria-label="Accessibility Controls">
+      <div class="toolbar-inner access-inner">
+        <span class="toolbar-label">Accessibility</span>
+        <button type="button" class="toolbar-button access-button" id="font-down" aria-label="Decrease font size">Decrease font</button>
+        <button type="button" class="toolbar-button access-button" id="font-reset" aria-label="Reset font size">Reset font</button>
+        <button type="button" class="toolbar-button access-button" id="font-up" aria-label="Increase font size">Increase font</button>
+        <span class="font-size-readout" id="font-size-value" aria-live="polite">Text size: 16 px</span>
+        <button type="button" class="toolbar-button access-button" id="theme-toggle" aria-pressed="false">Dark/Light Mode</button>
+        <button type="button" class="toolbar-button access-button" id="contrast-toggle" aria-pressed="false">High Contrast</button>
+        
+      </div>
+    </div>
+    <header class="site-header main-header">
+      <div class="header-inner">
+        <a class="brand logo" href="/" aria-label="Technical Skills Solutions home">
+          <img src="/images/logo.svg" width="54" height="54" alt="" />
+          <span><strong>Technical Skills Solutions</strong><small>Technology Without Barriers</small></span>
+        </a>
+        <button type="button" class="menu-toggle menu-btn" id="menu-toggle" aria-expanded="false" aria-controls="main-nav"><span aria-hidden="true">☰</span><span id="menu-toggle-label">Open navigation menu</span></button>
+        <nav id="main-nav" class="main-nav mobile-nav" aria-label="Primary navigation"><a href="/" accesskey="h"  >Home</a><a href="/about/" accesskey="a"  >About</a><a href="/tools/" accesskey="t"  >Tools</a><a href="/software/" accesskey="s"  >Software</a><a href="/shop/" accesskey="o"  >Shop</a><a href="/blogs/" accesskey="b"  >Blogs</a><a href="/privacy/" accesskey="p"  >Privacy</a><a href="/terms/" accesskey="m"  >Terms</a><a href="/contact/" accesskey="c"  >Contact</a></nav>
+      </div>
+    </header>
+    <main id="main-content" tabindex="-1">
+<section class="hero page-hero"><div class="hero-content page-hero-content"><p class="eyebrow">LOCAL DOCUMENT PROCESSING</p><h1>Document OCR &amp; Extractor</h1><p>Extract text from images and scanned PDFs with multilingual recognition, page-by-page progress and controlled memory use.</p></div></section>
+<section class="container section-block"><article class="content-card tool-workspace">
+<div class="tool-intro"><h2>Extract text from images and PDFs</h2><p>Choose one or more image or PDF files. Each PDF may contain up to <strong>1,000 pages</strong>. Every page is handled one at a time inside short batches, so the browser does not keep 1,000 rendered pages in memory together.</p><p class="notice"><strong>Privacy:</strong> Your selected image and PDF files are processed in this browser and are not uploaded by this OCR tool. The recognition work runs locally in your browser. The OCR engine, PDF.js worker and selected language data are fetched from their package/CDN distribution on first use and may be cached by your browser. Your selected document is not uploaded to our server. Detailed engine and language-asset loading messages are intentionally hidden.</p></div>
+<div class="form-grid">
+<div class="field full"><label for="ocr-file">Choose image or PDF files</label><input id="ocr-file" type="file" accept="image/png,image/jpeg,image/webp,image/bmp,image/tiff,.pdf,application/pdf" multiple><small>PDF limit: 1,000 pages per file. Maximum file size: 300 MB each. Large scans may take substantial time; use 10-page batches for long PDFs.</small></div>
+<div class="field"><label for="ocr-language">Recognition language</label><select id="ocr-language"><option value="eng+hin">English and Hindi</option><option value="hin">Hindi</option><option value="eng">English</option><option value="ben">Bengali</option><option value="guj">Gujarati</option><option value="mar">Marathi</option><option value="pan">Punjabi</option><option value="tam">Tamil</option><option value="tel">Telugu</option><option value="urd">Urdu</option><option value="san">Sanskrit</option></select></div>
+<div class="field"><label for="ocr-mode">Recognition quality</label><select id="ocr-mode"><option value="fast">Fast — one recognition pass</option><option value="balanced" selected>Balanced — original, contrast and adaptive</option><option value="enhanced">Enhanced — compare four image variants</option></select></div>
+<div class="field"><label for="ocr-scale">Image scale</label><select id="ocr-scale"><option value="1">1× — lower memory</option><option value="2" selected>2× — recommended</option><option value="3">3× — small print; more memory</option></select></div>
+<div class="field"><label for="ocr-batch">Page batch size</label><select id="ocr-batch"><option value="5">5 pages</option><option value="10" selected>10 pages — recommended for long PDFs</option><option value="20">20 pages</option><option value="50">50 pages — faster queue, higher memory use</option></select></div>
+</div>
+<div class="button-row"><button type="button" class="button-primary" id="ocr-start">Start OCR</button><button type="button" class="button-secondary" id="ocr-pause" disabled>Pause</button><button type="button" class="button-secondary" id="ocr-resume" disabled>Resume</button><button type="button" class="button-secondary" id="ocr-cancel" disabled>Cancel</button><button type="button" class="button-secondary" id="ocr-retry" disabled>Retry failed pages (0)</button></div>
+<div class="progress-block"><label for="ocr-progress">Overall progress</label><progress id="ocr-progress" value="0" max="100">0%</progress><p id="ocr-status" class="status-box" role="status" aria-live="polite" aria-atomic="true">Ready. Choose files to begin.</p></div>
+<div class="field"><label for="ocr-output">Recognized text</label><textarea id="ocr-output" rows="18" spellcheck="false" placeholder="Recognized text will appear here. Page headings will separate results."></textarea></div>
+<div class="button-row"><button type="button" class="button-primary" id="ocr-copy">Copy recognized text</button><button type="button" class="button-secondary" id="ocr-download">Download TXT file</button><button type="button" class="button-danger" id="ocr-clear">Clear results</button></div>
+<p class="fine-print">Pause and Cancel take effect after the current page finishes. Page results are saved incrementally in this browser with IndexedDB. Retry failed pages keeps the original selected files in memory until you leave this page. OCR confidence is an estimate, not a guarantee; check important names, numbers and tables against the original document.</p>
+</article></section></main>
+    <footer class="site-footer">
+      <div class="footer-container footer-grid">
+        <section class="footer-column footer-col"><h2>Technical Skills Solutions</h2><p>Accessible technology resources, practical browser tools and technical explainers designed to support digital independence for blind, low-vision and sighted users.</p><p class="credential"><strong>MSME Udyam Registration:</strong> UDYAM-RJ-30-0147268<br><strong>NIC:</strong> 85499 — Educational Services &amp; Technical Training</p></section>
+        <section class="footer-column footer-col"><h2>Community</h2><ul class="footer-links"><li><a href="https://www.youtube.com/@Technical-Solutions-For-Blind" target="_blank" rel="noopener noreferrer">Official YouTube channel</a></li><li><a href="https://t.me/technical_solutions_for_blind" target="_blank" rel="noopener noreferrer">Telegram channel</a></li><li><a href="https://chat.whatsapp.com/G9IUpSpxPkm8JDvdnUPtEy" target="_blank" rel="noopener noreferrer">WhatsApp community</a></li><li><a href="https://t.me/ayush546447" target="_blank" rel="noopener noreferrer">Non-copyright music Telegram</a></li></ul></section>
+        <section class="footer-column footer-col"><h2>Downloads, Explore &amp; Contact</h2><ul class="footer-links"><li><a href="/tools/">Online tools</a></li><li><a href="/shop/">Shop products</a></li><li><a href="/software/">Our software</a></li><li><a href="/android/">Android &amp; TalkBack guide</a></li><li><a href="/blogs/">Blogs</a></li><li><a href="mailto:technicalskillssolutions@gmail.com">technicalskillssolutions@gmail.com</a></li><li><a href="tel:+917410817798">+91 74108 17798</a></li></ul></section>
+      </div>
+      <div class="copyright-section footer-bottom"><div><a href="/privacy/">Privacy Policy</a><span aria-hidden="true"> · </span><a href="/terms/">Terms of Service</a></div><p>© 2026 Technical Skills Solutions. All rights reserved.</p></div>
+    </footer>
+    <div id="live-region" class="sr-only" role="status" aria-live="polite" aria-atomic="true"></div>
