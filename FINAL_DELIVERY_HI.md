@@ -7,6 +7,7 @@
 - `/ocr/`
 - `/url-shortener/`
 - `/chat-link-generator/`
+- `/temporary-mail/`
 - `/password-generator/`
 - `/sip-calculator/`
 - `/email-signature/`
@@ -25,7 +26,7 @@
 
 ## बाहरी सेवाओं की सीमा
 
-OCR engine, PDF.js, language files और QR module pinned public CDN से लोड होते हैं। URL shortener third-party API पर निर्भर है। उनकी live availability, provider-side rate limits, CORS/browser policy और account/domain capacity इस package के build test से प्रमाणित नहीं होते। Tool में provider की त्रुटि छिपाने के बजाय status में दिखाई जाती है। File Integrity & Hash Checker browser के built-in Web Crypto API पर चलता है; इसमें external API या model download नहीं है।
+OCR engine, PDF.js, language files और QR module pinned public CDN से लोड होते हैं। URL shortener और Temporary Mail third-party APIs पर निर्भर हैं। उनकी live availability, provider-side rate limits, CORS/browser policy और account/domain capacity इस package के build test से प्रमाणित नहीं होते। Tool में provider की त्रुटि छिपाने के बजाय status में दिखाई जाती है। Temporary Mail के लिए Mail.tm का attribution link रखा गया है; उसकी API terms और rate limits लागू होती हैं।
 
 ## Deploy
 
@@ -41,5 +42,4 @@ Local development के लिए `npm install` के बाद `npm run dev` 
 ## 2026-11-06 minor update
 - Accessibility toolbar note removed from every content page and generated blog template.
 - Font control accessible labels simplified to Decrease font size / Reset font size / Increase font size.
-
-- File Integrity & Hash Checker `/file-integrity-checker/` पर SHA-256, SHA-384 और SHA-512 प्रदान करता है। Files browser में ही रहती हैं; कोई model download या file upload नहीं होता।
+- Temporary Mail tries the official Mail.tm API first and the compatible Mail.gw API only if Mail.tm cannot be reached. HTTP rate-limit/service errors are not bypassed.

@@ -89,11 +89,11 @@ const pages = {
     keywords: 'URL shortener, link shortener, QR code generator, accessible link sharing',
     path: '/url-shortener/', type: 'SoftwareApplication', applicationCategory: 'UtilitiesApplication'
   },
-  fileIntegrity: {
-    title: 'File Integrity & Hash Checker - Technical Skills Solutions',
-    description: 'Calculate SHA-256, SHA-384 and SHA-512 file hashes locally in your browser and compare a file against a trusted checksum. No upload or model download.',
-    keywords: 'file hash checker, SHA-256 calculator, SHA-384, SHA-512, checksum verification, file integrity checker, verify downloaded file',
-    path: '/file-integrity-checker/', type: 'SoftwareApplication', applicationCategory: 'SecurityApplication'
+  tempMail: {
+    title: 'Temporary Mail Inbox - Technical Skills Solutions',
+    description: 'Create a receive-only temporary inbox for low-risk testing through a public email API. Do not use for sensitive accounts.',
+    keywords: 'temporary email, disposable inbox, receive-only email, test email inbox, temporary mail',
+    path: '/temporary-mail/', robots: 'noindex,nofollow', type: 'SoftwareApplication', applicationCategory: 'CommunicationApplication'
   },
   blogs: {
     title: 'Blogs - Technical Skills Solutions',

@@ -5,6 +5,11 @@ import pageMeta from '../src/data/page-meta.mjs';
 
 const root = process.cwd();
 const dist = path.join(root, 'dist');
+// GitHub Project Pages serves this repository below /technical-skills-solutions/.
+const basePath = '/technical-skills-solutions';
+const siteOrigin = 'https://technicalskillssolutions.github.io';
+const withBase = value => `${basePath}${value === '/' ? '/' : value}`;
+const prefixMarkup = markup => markup.replace(/\b(href|src|action|poster)=("|')\/(?!\/)/g, (_match, attr, quote) => `${attr}=${quote}${basePath}/`); 
 await fs.rm(dist, { recursive: true, force: true });
 await fs.mkdir(dist, { recursive: true });
 await fs.cp(path.join(root, 'public'), dist, { recursive: true });
@@ -21,13 +26,13 @@ const routeMap = {
   home:'/', about:'/about/', tools:'/tools/', shop:'/shop/', software:'/software/', android:'/android/',
   privacy:'/privacy/', terms:'/terms/', contact:'/contact/', ocr:'/ocr/', password:'/password-generator/',
   sip:'/sip-calculator/', chat:'/chat-link-generator/', signature:'/email-signature/',
-  shortener:'/url-shortener/', fileIntegrity:'/file-integrity-checker/', blogs:'/blogs/'
+  shortener:'/url-shortener/', tempMail:'/temporary-mail/', blogs:'/blogs/'
 };
 const files = {
   home:'home.html', about:'about.html', tools:'tools.html', shop:'shop.html', software:'software.html',
   android:'android.html', privacy:'privacy.html', terms:'terms.html', contact:'contact.html', ocr:'ocr.html',
   password:'password.html', sip:'sip.html', chat:'chat.html', signature:'signature.html',
-  shortener:'shortener.html', fileIntegrity:'file-integrity-checker.html', blogs:'blogs-index.html'
+  shortener:'shortener.html', tempMail:'temp-mail.html', blogs:'blogs-index.html'
 };
 const esc = value => String(value ?? '').replaceAll('&','&amp;').replaceAll('"','&quot;').replaceAll('<','&lt;');
 const importMap = {
@@ -39,11 +44,12 @@ const importMap = {
 };
 async function writePage(key, markup, metaOverride = {}) {
   const meta = { ...(pageMeta[key] || {}), ...metaOverride };
-  const url = 'https://technicalskillssolutions.in' + (meta.path || routeMap[key] || '/');
+  const url = siteOrigin + basePath + (meta.path || routeMap[key] || '/');
   const title = meta.title || 'Technical Skills Solutions';
   const description = meta.description || 'Accessible technology resources, browser tools and practical technical guides.';
   const keywords = meta.keywords || 'Technical Skills Solutions, accessible technology, NVDA, JAWS, screen reader tools';
-  const html = `<!doctype html><html lang="en-IN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><meta name="color-scheme" content="dark light"><meta name="theme-color" content="#081426"><title>${esc(title)}</title><meta name="description" content="${esc(description)}"><meta name="keywords" content="${esc(keywords)}"><meta name="author" content="Technical Skills Solutions"><meta name="robots" content="${esc(meta.robots || 'index,follow')}"><link rel="canonical" href="${esc(url)}"><link rel="icon" href="/images/logo.svg" type="image/svg+xml"><link rel="manifest" href="/manifest.webmanifest"><meta property="og:type" content="website"><meta property="og:site_name" content="Technical Skills Solutions"><meta property="og:title" content="${esc(title)}"><meta property="og:description" content="${esc(description)}"><meta property="og:url" content="${esc(url)}"><meta property="og:image" content="https://technicalskillssolutions.in/images/og-default.png"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="${esc(title)}"><meta name="twitter:description" content="${esc(description)}"><meta name="twitter:image" content="https://technicalskillssolutions.in/images/og-default.png"><link rel="stylesheet" href="/css/style.css"><script type="importmap">${JSON.stringify(importMap)}</script><script type="module" src="/scripts/site.js"></script></head><body><div id="app">${markup}</div></body></html>`;
+  markup = prefixMarkup(markup);
+  const html = `<!doctype html><html lang="en-IN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><meta name="color-scheme" content="dark light"><meta name="theme-color" content="#081426"><title>${esc(title)}</title><meta name="description" content="${esc(description)}"><meta name="keywords" content="${esc(keywords)}"><meta name="author" content="Technical Skills Solutions"><meta name="robots" content="${esc(meta.robots || 'index,follow')}"><link rel="canonical" href="${esc(url)}"><link rel="icon" href="${basePath}/images/logo.svg" type="image/svg+xml"><link rel="manifest" href="${basePath}/manifest.webmanifest"><meta property="og:type" content="website"><meta property="og:site_name" content="Technical Skills Solutions"><meta property="og:title" content="${esc(title)}"><meta property="og:description" content="${esc(description)}"><meta property="og:url" content="${esc(url)}"><meta property="og:image" content="${siteOrigin}${basePath}/images/og-default.png"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="${esc(title)}"><meta name="twitter:description" content="${esc(description)}"><meta name="twitter:image" content="${siteOrigin}${basePath}/images/og-default.png"><link rel="stylesheet" href="${basePath}/css/style.css"><script type="importmap">${JSON.stringify(importMap)}</script><script type="module" src="${basePath}/scripts/site.js"></script></head><body><div id="app">${markup}</div></body></html>`;
   const route = meta.path || routeMap[key] || '/';
   const target = route === '/' ? path.join(dist, 'index.html') : path.join(dist, route.replace(/^\//,'').replace(/\/$/,''), 'index.html');
   await fs.mkdir(path.dirname(target), { recursive: true });
@@ -69,9 +75,9 @@ await fs.copyFile(path.join(root, 'src/styles/site.css'), path.join(dist, 'css/s
 // Generate sitemap entries from the routes that actually exist in this build.
 const sitemapPaths = Object.values(routeMap).filter((value, index, all) => all.indexOf(value) === index);
 for (const post of blogs) sitemapPaths.push(`/blogs/${post.slug}/`);
-const sitemap = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${sitemapPaths.map(route => `  <url><loc>https://technicalskillssolutions.in${route}</loc></url>`).join('\n')}\n</urlset>\n`;
+const sitemap = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${sitemapPaths.map(route => `  <url><loc>${siteOrigin}${basePath}${route}</loc></url>`).join('\n')}\n</urlset>\n`;
 await fs.writeFile(path.join(dist, 'sitemap.xml'), sitemap);
 
 // A useful accessible fallback for unknown routes on GitHub Pages.
-await fs.writeFile(path.join(dist, '404.html'), `<!doctype html><html lang="en-IN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Page not found - Technical Skills Solutions</title><meta name="description" content="The requested page could not be found. Return to Technical Skills Solutions or browse the available tools."><meta name="robots" content="noindex,follow"><meta name="theme-color" content="#081426"><link rel="stylesheet" href="/css/style.css"></head><body><main class="container section-block"><article class="content-card"><h1>Page not found</h1><p>The page may have moved or the address may be incorrect.</p><p><a class="button-link" href="/">Go to homepage</a></p><p><a href="/tools/">Browse all tools</a></p></article></main></body></html>`);
+await fs.writeFile(path.join(dist, '404.html'), `<!doctype html><html lang="en-IN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Page not found - Technical Skills Solutions</title><meta name="description" content="The requested page could not be found. Return to Technical Skills Solutions or browse the available tools."><meta name="robots" content="noindex,follow"><meta name="theme-color" content="#081426"><link rel="stylesheet" href="${basePath}/css/style.css"></head><body><main class="container section-block"><article class="content-card"><h1>Page not found</h1><p>The page may have moved or the address may be incorrect.</p><p><a class="button-link" href="${basePath}/">Go to homepage</a></p><p><a href="${basePath}/tools/">Browse all tools</a></p></article></main></body></html>`);
 console.log(`Built ${Object.keys(files).length + blogs.length} static HTML pages and compiled TypeScript browser modules.`);

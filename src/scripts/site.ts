@@ -1,7 +1,8 @@
 import { parseHttpDestination } from '../lib/shortener.js';
 const APP_NAME = 'Technical Skills Solutions';
-const base = '/';
-const rawPath = location.pathname.toLowerCase().replace(/index\.html$/, '').replace(/\/+$/, '');
+const base = '/technical-skills-solutions/';
+const appPath = location.pathname.startsWith(base) ? location.pathname.slice(base.length - 1) : location.pathname;
+const rawPath = appPath.toLowerCase().replace(/index\.html$/, '').replace(/\/+$/, '');
 const pathParts = rawPath.split('/').filter(Boolean);
 const inBlogDirectory = pathParts[0] === 'blogs';
 const fileName = pathParts.at(-1) || 'index';
@@ -11,7 +12,7 @@ const routeMap = {
     contact: 'contact', ocr: 'ocr', 'password-generator': 'password',
     'sip-calculator': 'sip', 'chat-link-generator': 'chat', 'chat_link_generator': 'chat',
     'email-signature': 'signature', 'url-shortener': 'shortener',
-    'file-integrity-checker': 'file-integrity'
+    'temporary-mail': 'temp-mail', 'temp-mail': 'temp-mail'
 };
 const route = inBlogDirectory ? 'blogs' : (routeMap[fileName] || 'home');
 const blogSlug = inBlogDirectory && fileName !== 'blogs' ? fileName : '';
@@ -169,16 +170,8 @@ const toolsData = [
     { title: 'SIP Calculator', description: 'Estimate monthly investment growth with a transparent contribution and return breakdown.', href: 'sip-calculator.html', category: 'Finance' },
     { title: 'Direct Chat Link Generator', description: 'Create supported WhatsApp, Telegram, Messenger profile, Instagram profile, Viber, Signal, email and phone links.', href: 'chat_link_generator.html', category: 'Communication' },
     { title: 'Gmail Email Signature Maker', description: 'Create a transparent signature image and an accessible email footer for Gmail.', href: 'email-signature.html', category: 'Communication' },
-    {
-        title: 'URL Shortener & QR Generator',
-        description: 'Create a short URL and generate QR codes locally from the short link.',
-        href: 'url-shortener.html', category: 'Communication'
-    },
-    {
-        title: 'File Integrity & Hash Checker',
-        description: 'Calculate SHA-256, SHA-384 or SHA-512 file fingerprints and verify a file against a known checksum. Processing stays in your browser.',
-        href: 'file-integrity-checker.html', category: 'Security'
-    },
+    { title: 'URL Shortener & QR Generator', description: 'Create a short URL and generate QR codes locally from the short link.', href: 'url-shortener.html', category: 'Communication' },
+    { title: 'Temporary Mail Inbox', description: 'Create a receive-only temporary inbox through an external provider. Do not use for sensitive accounts.', href: 'temp-mail.html', category: 'Privacy' }
 ];
 // Tools hub search and sorting.
 if (route === 'tools') {
@@ -695,47 +688,122 @@ if (route === 'signature') {
     updateEmailDetails();
     window.addEventListener('pagehide', () => { uploadedBitmap?.close(); }, { once: true });
 }
-// File Integrity & Hash Checker: browser-native Web Crypto; no API, server upload or model.
-if (route === 'file-integrity') {
-    const fileInput = $('hash-file') as HTMLInputElement | null;
-    const algorithmInput = $('hash-algorithm') as HTMLSelectElement | null;
-    const expectedInput = $('hash-expected') as HTMLInputElement | null;
-    const calculateButton = $('hash-calculate') as HTMLButtonElement | null;
-    const copyButton = $('hash-copy') as HTMLButtonElement | null;
-    const resultInput = $('hash-result') as HTMLInputElement | null;
-    const statusNode = $('hash-status') as HTMLElement | null;
-    let currentHash = '';
-    const setStatus = (message: string) => { if (statusNode) statusNode.textContent = message; announce(message); };
-    const normalizeHash = (value: string) => value.trim().toLowerCase().replace(/^0x/, '').replace(/\\s+/g, '');
-    calculateButton?.addEventListener('click', async () => {
-        const file = fileInput?.files?.[0];
-        if (!file) { setStatus('Choose a file before calculating its hash.'); fileInput?.focus(); return; }
-        if (!globalThis.crypto?.subtle) { setStatus('File hashing requires a secure browser context such as HTTPS. Open the official website over HTTPS and try again.'); return; }
-        const maxBytes = 100 * 1024 * 1024;
-        if (file.size > maxBytes) { setStatus('This file is larger than the 100 MB safety limit. Choose a smaller file.'); return; }
-        const algorithm = algorithmInput?.value || 'SHA-256';
-        if (calculateButton) calculateButton.disabled = true;
-        if (copyButton) copyButton.disabled = true;
-        if (resultInput) resultInput.value = '';
-        currentHash = '';
-        setStatus(`Calculating ${algorithm} for ${file.name}. The file is processed locally in this browser.`);
+// Temporary inbox integration using the provider's documented public REST API.
+if (route === 'temp-mail') {
+    const MAIL_PROVIDERS = ['https://api.mail.tm', 'https://api.mail.gw'];
+    const STORE_KEY = 'tss-mail-session-v2';
+    let account = null;
+    let pollTimer = 0;
+    let refreshing = false;
+    const status = message => { const node = $('temp-status'); if (node) node.textContent = message; announce(message); };
+    const setControls = active => { for (const id of ['temp-refresh', 'temp-copy', 'temp-forget']) { const node = $(id); if (node) node.disabled = !active; } };
+    const safeText = (tag, value) => { const node = document.createElement(tag); node.textContent = String(value ?? ''); return node; };
+    async function api(path: string, options: any = {}): Promise<any> {
+        const { baseUrl, ...requestOptions } = options;
+        const apiBase = baseUrl || account?.apiBase || MAIL_PROVIDERS[0];
+        const headers = new Headers(requestOptions.headers || {}); headers.set('Accept', 'application/ld+json, application/json');
+        if (requestOptions.body) headers.set('Content-Type', 'application/json');
+        if (options.auth !== false && account?.token) headers.set('Authorization', `Bearer ${account.token}`);
+        const controller = new AbortController(); const timer = window.setTimeout(() => controller.abort(), 20000);
+        let response;
+        try { response = await fetch(`${apiBase}${path}`, { ...requestOptions, headers, signal: controller.signal, cache: 'no-store' }); }
+        catch (error) { if (error instanceof DOMException && error.name === 'AbortError') throw new Error('The temporary mail provider timed out. Try again later.'); throw new Error(`Could not connect to ${apiBase.replace('https://api.', '')}. Your network, DNS or browser privacy extension may be blocking this provider.`); }
+        finally { window.clearTimeout(timer); }
+        const raw = await response.text(); let data: any = {};
+        try { data = raw ? JSON.parse(raw) : {}; } catch { data = { detail: raw }; }
+        if (!response.ok) {
+            const detail = data['hydra:description'] || data.detail || data.message || data.title || `HTTP ${response.status}`;
+            const retry = response.status === 429 ? ' The provider rate limit was reached; wait at least one second before retrying.' : '';
+            throw new Error(`Mail provider error ${response.status}: ${String(detail).slice(0, 260)}.${retry}`);
+        }
+        return data;
+    }
+    function saveSession() { if (account) sessionStorage.setItem(STORE_KEY, JSON.stringify(account)); else sessionStorage.removeItem(STORE_KEY); }
+    function stopPolling() { if (pollTimer) window.clearInterval(pollTimer); pollTimer = 0; }
+    function startPolling() { stopPolling(); if (account?.token) pollTimer = window.setInterval(() => { void refreshInbox(true); }, 30000); }
+    function randomHex(bytes = 16) { const data = crypto.getRandomValues(new Uint8Array(bytes)); return [...data].map(v => v.toString(16).padStart(2, '0')).join(''); }
+    function randomPassword() { return randomHex(32) + 'Tss!9'; }
+    async function createInbox() {
+        let lastConnectionError = null;
+        for (const provider of MAIL_PROVIDERS) {
+            let domainData: any;
+            try { domainData = await api('/domains?page=1', { auth: false, baseUrl: provider }); }
+            catch (error) {
+                lastConnectionError = error;
+                // Try the second independently operated public API only when the first cannot be reached.
+                continue;
+            }
+            const domains = (domainData['hydra:member'] || []).filter(item => item.isActive && !item.isPrivate && typeof item.domain === 'string');
+            if (!domains.length) { lastConnectionError = new Error(`${provider.replace('https://api.', '')} has no public domains available right now.`); continue; }
+            let lastError: any = null;
+            for (let attempt = 0; attempt < Math.min(3, domains.length); attempt++) {
+                const domain = domains[attempt % domains.length].domain;
+                const address = `tss${randomHex(6)}@${domain}`;
+                const password = randomPassword();
+                try {
+                    const created = await api('/accounts', { method: 'POST', auth: false, baseUrl: provider, body: JSON.stringify({ address, password }) });
+                    const token = await api('/token', { method: 'POST', auth: false, baseUrl: provider, body: JSON.stringify({ address, password }) });
+                    if (!token.token) throw new Error('Provider did not return an access token for the new inbox.');
+                    account = { address, token: token.token, accountId: created.id || token.id, apiBase: provider, createdAt: new Date().toISOString() };
+                    saveSession(); return;
+                } catch (error) {
+                    lastError = error;
+                    // Respect provider rate limits and service errors; do not switch providers to evade them.
+                    if (error instanceof Error && !/422|already exists|already used|taken/i.test(error.message)) throw error;
+                }
+            }
+            if (lastError) throw lastError;
+        }
+        throw lastConnectionError || new Error('No temporary email provider is reachable right now. Please try again later.');
+    }
+    function renderMessages(payload) {
+        const list = $('temp-messages'); const messages = payload['hydra:member'] || [];
+        list.replaceChildren();
+        if (!messages.length) { list.append(safeText('p', 'No messages have arrived yet. Refresh this inbox after sending a message to its address.')); return; }
+        for (const item of messages) {
+            const article = document.createElement('article'); article.className = 'message-card';
+            article.append(safeText('h3', item.subject || '(No subject)'), safeText('p', `From: ${item.from?.name ? item.from.name + ' ' : ''}${item.from?.address || 'Unknown sender'}`), safeText('p', `Received: ${item.createdAt ? new Date(item.createdAt).toLocaleString() : 'Time unavailable'}`));
+            const open = document.createElement('button'); open.type = 'button'; open.className = 'button-primary'; open.textContent = 'Read message'; open.addEventListener('click', () => { void openMessage(String(item.id)); });
+            article.append(open); list.append(article);
+        }
+        status(`${messages.length} message(s) loaded in the temporary inbox.`);
+    }
+    async function refreshInbox(silent = false) {
+        if (!account?.token || refreshing) return; refreshing = true;
+        try { const payload = await api('/messages?page=1'); renderMessages(payload); }
+        catch (error) { if (!silent) status(`Could not refresh the inbox: ${error instanceof Error ? error.message : String(error)}`); }
+        finally { refreshing = false; }
+    }
+    async function openMessage(id) {
+        if (!id) return; const detail = $('temp-message-detail'); detail.hidden = false; detail.textContent = 'Loading message…';
         try {
-            const digest = await crypto.subtle.digest(algorithm, await file.arrayBuffer());
-            currentHash = Array.from(new Uint8Array(digest), byte => byte.toString(16).padStart(2, '0')).join('');
-            if (resultInput) resultInput.value = currentHash;
-            if (copyButton) copyButton.disabled = false;
-            const expected = normalizeHash(expectedInput?.value || '');
-            if (expected) setStatus(expected === currentHash
-                ? `Hash calculated. Checksum verification successful: the selected file matches the expected ${algorithm} hash.`
-                : `Hash calculated. Checksum mismatch: the selected file does not match the expected ${algorithm} hash.`);
-            else setStatus(`${algorithm} calculated successfully for ${file.name}. The file was not uploaded.`);
-        } catch (error) {
-            setStatus(`Could not calculate the file hash: ${error instanceof Error ? error.message : String(error)}`);
-        } finally { if (calculateButton) calculateButton.disabled = false; }
+            const message = await api(`/messages/${encodeURIComponent(id)}`);
+            const body = String(message.text || message.intro || 'No plain-text body was provided.');
+            detail.replaceChildren(safeText('h3', message.subject || '(No subject)'), safeText('p', `From: ${message.from?.address || 'Unknown sender'}`), safeText('p', `Received: ${message.createdAt ? new Date(message.createdAt).toLocaleString() : 'Time unavailable'}`));
+            const otp = body.match(/\b([0-9]{4,8})\b/);
+            if (otp) { const row = safeText('p', `Possible verification code: ${otp[1]}`); const copy = document.createElement('button'); copy.type = 'button'; copy.className = 'button-secondary'; copy.textContent = 'Copy possible verification code'; copy.addEventListener('click', () => { void copyText(otp[1], 'Verification code copied.'); }); row.append(' ', copy); detail.append(row); }
+            detail.append(safeText('h4', 'Message body'), safeText('pre', body)); detail.focus();
+            if (!message.seen) void api(`/messages/${encodeURIComponent(id)}`, { method: 'PATCH', body: '{}' }).catch(() => {});
+            status('Message opened as plain text. Email HTML is not executed.');
+        } catch (error) { detail.textContent = `Could not open message: ${error instanceof Error ? error.message : String(error)}`; status('Could not open this message. The inbox may have expired or the provider may be unavailable.'); }
+    }
+    $('temp-create')?.addEventListener('click', async () => {
+        if (!$('temp-consent')?.checked) { status('Confirm the temporary inbox safety notice before creating an address.'); $('temp-consent')?.focus(); return; }
+        const button = $('temp-create'); button.disabled = true; status('Finding an available public email domain…');
+        try { await createInbox(); $('temp-address').value = account.address; $('temp-expiry').textContent = 'Inbox retention is controlled by the email provider. This page does not promise a fixed expiry time.'; $('temp-message-detail').hidden = true; setControls(true); $('temp-create').disabled = true; status(`Temporary inbox created: ${account.address}. Copy the address and refresh to check incoming messages.`); await refreshInbox(true); startPolling(); }
+        catch (error) { status(`Inbox creation failed: ${error instanceof Error ? error.message : String(error)}`); }
+        finally { button.disabled = false; }
     });
-    copyButton?.addEventListener('click', () => { if (currentHash) void copyText(currentHash, 'File hash copied to clipboard.'); });
+    $('temp-copy')?.addEventListener('click', () => { void copyText(account?.address || '', 'Temporary email address copied.'); });
+    $('temp-refresh')?.addEventListener('click', () => { status('Refreshing temporary inbox…'); void refreshInbox(); });
+    $('temp-forget')?.addEventListener('click', async () => {
+        const old = account; stopPolling(); account = null; $('temp-create').disabled = false; saveSession(); $('temp-address').value = ''; $('temp-messages').replaceChildren(safeText('p', 'No messages loaded.')); $('temp-message-detail').hidden = true; $('temp-expiry').textContent = 'Inbox retention is controlled by the provider.'; setControls(false);
+        if (old?.accountId) { try { await api(`/accounts/${encodeURIComponent(old.accountId)}`, { method: 'DELETE', headers: { Authorization: `Bearer ${old.token}` } }); status('The temporary account deletion request was sent to the provider, and this device has forgotten its access token.'); } catch { status('This device has forgotten the temporary inbox token. The provider may retain the account until its own retention rules apply.'); } }
+        else status('This device has forgotten the temporary inbox.');
+    });
+    try { const saved = JSON.parse(sessionStorage.getItem(STORE_KEY) || 'null'); if (saved?.address && saved?.token) { account = saved; $('temp-address').value = account.address; $('temp-create').disabled = true; setControls(true); $('temp-expiry').textContent = 'Inbox retention is controlled by the email provider.'; status('Restoring your temporary inbox from this browser tab…'); void refreshInbox(true); startPolling(); } else setControls(false); } catch { sessionStorage.removeItem(STORE_KEY); setControls(false); }
+    window.addEventListener('pagehide', stopPolling, { once: true });
 }
-
 if (route === 'ocr') {
     import('./ocr.js').catch(error => { const status = $('ocr-status'); if (status)
         status.textContent = `OCR could not be started: ${error instanceof Error ? error.message : String(error)}. Check your internet connection and reload the page.`; announce(status.textContent); console.error('OCR startup failure:', error); });

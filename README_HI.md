@@ -38,9 +38,8 @@ GitHub Actions source से TypeScript compile करता है और `dist
 ## Tools and external services
 - **OCR:** Images/PDFs browser में process होते हैं। Tesseract.js, PDF.js और language assets pinned CDN locations से load होते हैं। Selected PDF/image files इस साइट के server पर upload नहीं किए जाते।
 - **URL Shortener:** Destination URL external shortening API को भेजा जाता है। QR image browser में bundled QRCode module से बनती है। Private links shorten न करें।
+- **Temporary Mail:** Mail.tm API सीधे browser से call होती है। Tool name, personal contact email या phone number नहीं मांगता। Provider rate limits, domain availability और retention policy लागू होती हैं।
 - **Chat Link Generator:** Link result हमेशा दिखाई देता है और copy किया जा सकता है; QR बनाने में समस्या हो तो भी link उपलब्ध रहता है। Platform restrictions लागू होती हैं।
 
 ## Accessibility
 Skip to main content, semantic headings, field labels, keyboard access, visible focus, screen-reader status messages, accessibility controls, high contrast and non-live clock are retained. Consecutive action buttons in `.button-row` are separated by a single `<br>`.
-
-- **File Integrity & Hash Checker:** SHA-256, SHA-384 और SHA-512 checksums browser के Web Crypto API से स्थानीय रूप से calculate और verify करता है। कोई file upload या AI model download नहीं।
